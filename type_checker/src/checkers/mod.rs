@@ -4,11 +4,11 @@ mod min_max_size;
 mod validate;
 mod regex;
 
-pub use min_max_length::{ MinLength, MaxLength, MinMaxLength };
-pub use min_max_range::{ MinRange, MaxRange, MinMaxRange };
-pub use min_max_size::{ MinSize, MaxSize, MinMaxSize };
-pub use validate::Validate;
-pub use self::regex::RegEx;
+pub use self::min_max_length::*;
+pub use self::min_max_range::*;
+pub use self::min_max_size::*;
+pub use self::validate::*;
+pub use self::regex::*;
 
 pub trait Checker<T: ?Sized> {
     fn check(&self, value: &T) -> Result<(), String>;

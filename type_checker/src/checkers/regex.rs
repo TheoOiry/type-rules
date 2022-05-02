@@ -1,6 +1,5 @@
+use regex_helper::Regex;
 use super::Checker;
-
-use regex::Regex;
 
 pub struct RegEx<'a>(pub &'a str);
 

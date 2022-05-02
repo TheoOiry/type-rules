@@ -1,5 +1,10 @@
-use type_checker::checkers::{MaxLength, MinMaxLength, MinMaxSize, RegEx, Validate};
 use type_checker::Validator;
+use type_checker::checkers::{
+    MaxLength,
+    MinMaxLength,
+    MinMaxSize,
+    RegEx, Validate
+};
 
 #[derive(Validator)]
 struct Email(
@@ -21,4 +26,4 @@ struct SignUpForm {
 }
 
 #[derive(Validator)]
-struct MaxSize(#[check(MinMaxSize(1, 50))] Vec<i32>);
+struct VecWrapper<T>(#[check(MinMaxSize(1, 50))] Vec<T>);
