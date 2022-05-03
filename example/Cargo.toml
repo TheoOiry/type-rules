@@ -7,3 +7,4 @@ edition = "2021"
 
 [dependencies]
 type_checker = { path = "../type_checker" , features= ["derive"]}
+chrono = "0.4"

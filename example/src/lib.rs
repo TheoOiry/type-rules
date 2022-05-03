@@ -1,9 +1,11 @@
+use chrono::prelude::*;
 use type_checker::Validator;
 use type_checker::checkers::{
     MaxLength,
     MinMaxLength,
     MinMaxSize,
     MinMaxRange,
+    MaxRange,
     RegEx,
     Validate
 };
@@ -26,6 +28,9 @@ struct SignUpForm {
     #[check(MinMaxLength(8, 50))]
     password: String,
 }
+
+#[derive(Validator)]
+struct PastDate(#[check(MaxRange(Utc::now()))] DateTime<Utc>);
 
 #[derive(Validator)]
 struct FloatWrapper(#[check(MinMaxRange(0_f32, 100_f32))] f32);
