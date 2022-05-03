@@ -1,4 +1,16 @@
-
-
 [workspace]
-members = ["type_checker", "type_checker_derive", "example"]
+members = [".", "derive"]
+
+[package]
+name = "type_checker"
+version = "0.1.0"
+edition = "2021"
+license = "Apache-2.0"
+
+[dependencies]
+type_checker_derive = { optional = true, path = "derive" }
+regex_helper = { package = "regex", version = "1.5.4" }
+claim = "0.5.0"
+
+[features]
+derive = ["type_checker_derive"]
