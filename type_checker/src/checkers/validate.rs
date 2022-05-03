@@ -1,3 +1,4 @@
+use crate::checkers::check_permissively_option;
 use crate::Validator;
 use super::Checker;
 
@@ -6,6 +7,12 @@ pub struct Validate();
 impl<T: Validator> Checker<T> for Validate {
     fn check(&self, value: &T) -> Result<(), String> {
         value.check_validity()
+    }
+}
+
+impl<T: Validator> Checker<Option<T>> for Validate {
+    fn check(&self, value: &Option<T>) -> Result<(), String> {
+        check_permissively_option(self, value)
     }
 }
 

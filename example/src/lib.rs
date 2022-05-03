@@ -3,7 +3,9 @@ use type_checker::checkers::{
     MaxLength,
     MinMaxLength,
     MinMaxSize,
-    RegEx, Validate
+    MinMaxRange,
+    RegEx,
+    Validate
 };
 
 #[derive(Validator)]
@@ -24,6 +26,9 @@ struct SignUpForm {
     #[check(MinMaxLength(8, 50))]
     password: String,
 }
+
+#[derive(Validator)]
+struct FloatWrapper(#[check(MinMaxRange(0_f32, 100_f32))] f32);
 
 #[derive(Validator)]
 struct VecWrapper<T>(#[check(MinMaxSize(1, 50))] Vec<T>);

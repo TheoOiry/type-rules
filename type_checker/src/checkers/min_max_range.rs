@@ -1,3 +1,4 @@
+use super::check_permissively_option;
 use super::Checker;
 
 pub struct MinMaxRange<T: PartialOrd<T>>(pub T, pub T);
@@ -40,6 +41,25 @@ fn check_value_too_high<T: PartialOrd<T>>(value: &T, max_range: &T) -> Result<()
         return Err(String::from("Value is too high"));
     }
     Ok(())
+}
+
+impl<T: PartialOrd<T>> Checker<Option<T>> for MinMaxRange<T> {
+    fn check(&self, value: &Option<T>) -> Result<(), String> {
+        check_permissively_option(self, value)
+    }
+}
+
+
+impl<T: PartialOrd<T>> Checker<Option<T>> for MaxRange<T> {
+    fn check(&self, value: &Option<T>) -> Result<(), String> {
+        check_permissively_option(self, value)
+    }
+}
+
+impl<T: PartialOrd<T>> Checker<Option<T>> for MinRange<T> {
+    fn check(&self, value: &Option<T>) -> Result<(), String> {
+        check_permissively_option(self, value)
+    }
 }
 
 #[cfg(test)]

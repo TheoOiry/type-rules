@@ -1,3 +1,4 @@
+use crate::checkers::{check_permissively_option, check_permissively_ref_option};
 use super::Checker;
 
 pub struct MinMaxLength(pub usize, pub usize);
@@ -6,28 +7,41 @@ pub struct MinLength(pub usize);
 
 pub struct MaxLength(pub usize);
 
-impl<T: AsRef<str> + ?Sized> Checker<T> for MinMaxLength {
-    fn check(&self, value: &T) -> Result<(), String> {
-        let value = value.as_ref();
+impl Checker<String> for MinMaxLength {
+    fn check(&self, value: &String) -> Result<(), String> {
         check_value_too_short(value.len(), self.0)?;
-        check_value_too_long(value.len(), self.1)?;
-        Ok(())
+        check_value_too_long(value.len(), self.1)
     }
 }
 
-impl<T: AsRef<str> + ?Sized> Checker<T> for MinLength {
-    fn check(&self, value: &T) -> Result<(), String> {
-        let value = value.as_ref();
+impl Checker<str> for MinMaxLength {
+    fn check(&self, value: &str) -> Result<(), String> {
         check_value_too_short(value.len(), self.0)?;
-        Ok(())
+        check_value_too_long(value.len(), self.1)
     }
 }
 
-impl<T: AsRef<str> + ?Sized> Checker<T> for MaxLength {
-    fn check(&self, value: &T) -> Result<(), String> {
-        let value = value.as_ref();
-        check_value_too_long(value.len(), self.0)?;
-        Ok(())
+impl Checker<String> for MaxLength {
+    fn check(&self, value: &String) -> Result<(), String> {
+        check_value_too_long(value.len(), self.0)
+    }
+}
+
+impl Checker<str> for MaxLength {
+    fn check(&self, value: &str) -> Result<(), String> {
+        check_value_too_long(value.len(), self.0)
+    }
+}
+
+impl Checker<String> for MinLength {
+    fn check(&self, value: &String) -> Result<(), String> {
+        check_value_too_short(value.len(), self.0)
+    }
+}
+
+impl Checker<str> for MinLength {
+    fn check(&self, value: &str) -> Result<(), String> {
+        check_value_too_short(value.len(), self.0)
     }
 }
 
@@ -43,6 +57,42 @@ fn check_value_too_long(length: usize, max_length: usize) -> Result<(), String> 
         return Err(String::from("Value is too long"));
     }
     Ok(())
+}
+
+impl Checker<Option<String>> for MinMaxLength {
+    fn check(&self, value: &Option<String>) -> Result<(), String> {
+        check_permissively_option(self, value)
+    }
+}
+
+impl Checker<Option<&str>> for MinMaxLength {
+    fn check(&self, value: &Option<&str>) -> Result<(), String> {
+        check_permissively_ref_option(self, value)
+    }
+}
+
+impl Checker<Option<String>> for MinLength {
+    fn check(&self, value: &Option<String>) -> Result<(), String> {
+        check_permissively_option(self, value)
+    }
+}
+
+impl Checker<Option<&str>> for MinLength {
+    fn check(&self, value: &Option<&str>) -> Result<(), String> {
+        check_permissively_ref_option(self, value)
+    }
+}
+
+impl Checker<Option<String>> for MaxLength {
+    fn check(&self, value: &Option<String>) -> Result<(), String> {
+        check_permissively_option(self, value)
+    }
+}
+
+impl Checker<Option<&str>> for MaxLength {
+    fn check(&self, value: &Option<&str>) -> Result<(), String> {
+        check_permissively_ref_option(self, value)
+    }
 }
 
 #[cfg(test)]

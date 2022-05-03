@@ -1,3 +1,4 @@
+use crate::checkers::check_permissively_option;
 use super::Checker;
 
 pub struct MinMaxSize(pub usize, pub usize);
@@ -41,6 +42,24 @@ fn check_value_too_long(length: usize, max_size: usize) -> Result<(), String> {
         return Err(String::from("Collection is too long"));
     }
     Ok(())
+}
+
+impl<T> Checker<Option<Vec<T>>> for MinMaxSize {
+    fn check(&self, value: &Option<Vec<T>>) -> Result<(), String> {
+        check_permissively_option(self, value)
+    }
+}
+
+impl<T> Checker<Option<Vec<T>>> for MaxSize {
+    fn check(&self, value: &Option<Vec<T>>) -> Result<(), String> {
+        check_permissively_option(self, value)
+    }
+}
+
+impl<T> Checker<Option<Vec<T>>> for MinSize {
+    fn check(&self, value: &Option<Vec<T>>) -> Result<(), String> {
+        check_permissively_option(self, value)
+    }
 }
 
 #[cfg(test)]
