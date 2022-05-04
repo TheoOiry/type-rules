@@ -19,8 +19,8 @@ type-rules = { version = "0.1", features = ["derive"] }
 
 ## Basic checking
 
-You can declare a struct and impose some constraints on each field:
-
+You can declare a struct and impose some constraints on each field 
+and check the validity like this:
 ```rust
 use type_rules::Validator;
 //Don't forget to import the used rules.
@@ -33,21 +33,17 @@ struct NewUser {
     #[rule(MinMaxLength(8, 50))]
     password: String,
 }
-```
 
-Then check the validity like this:
-
-```rust
 let new_user = NewUser {
     email: "examples@examples.com".to_string(),
     password: "OPw$5%hJ".to_string(),
 };
-new_user.check_validity().unwrap(); //OK
+assert!(new_user.check_validity().is_ok());
 let new_user = NewUser {
     email: "examples@examples.com".to_string(),
     password: "O".to_string(),
 };
-new_user.check_validity().unwrap(); //Value is too short
+assert!(new_user.check_validity().is_err()); //Value is too short
 ```
 
 ## Advanced checking
@@ -55,6 +51,9 @@ new_user.check_validity().unwrap(); //Value is too short
 To check recursively, you can use the `Validate` rule
 
 ```rust
+use type_rules::rules::{MaxLength, RegEx, Validate, MinMaxLength};
+use type_rules::Validator;
+
 #[derive(Validator)]
 struct EmailWrapper(#[rule(MaxLength(100), RegEx(r"^\S+@\S+\.\S+"))] String);
 
@@ -72,10 +71,17 @@ You can use expressions directly in rule derive attribute.
 For example, you can use const or function directly in the checker parameters:
 
 ```rust
+use type_rules::rules::MaxRange;
+use chrono::prelude::*;
+use type_rules::Validator;
+
 #[derive(Validator)]
-struct PastDate(#[rule(MaxRange(Utc::now()))] DateTime<Utc>);
+struct AnniversaryDate(#[rule(MaxRange(Utc::now()))] DateTime<Utc>);
 ```
 ```rust
+use type_rules::rules::MinLength;
+use type_rules::Validator;
+
 const MIN_PASSWORD_LENGTH: usize = 8;
 
 #[derive(Validator)]
@@ -86,6 +92,10 @@ Or use expressions to express a checker directly.
 Here is an example of using a rule with more complex values:
 
 ```rust
+use std::env;
+use type_rules::rules::MaxLength;
+use type_rules::Validator;
+
 fn generate_max_payload_rule() -> MaxLength {
     MaxLength(match env::var("MAX_PAYLOAD") {
         Ok(val) => val.parse().unwrap_or_else(|_| 10000),
@@ -99,7 +109,7 @@ struct Payload(#[rule(generate_max_payload_rule())] String);
 
 In this case the `generate_max_payload_rule` function is executed at each check
 
-## Make your own checker
+## Make your own rule
 
 If you need a specific rule, just make a tuple struct (or struct if you make the declaration outside the struct definition)
 that implements the `Rule` feature :
@@ -124,7 +134,10 @@ impl Rule<i32> for IsEven {
 struct MyInteger(#[rule(IsEven())] i32);
 ```
 
-## Checkers list
+## Rules list
+
+Here a list of the rules you can find in this crate, 
+if you want more details go to the rule definition.
 
 Check the length of a `String` or `&str`:
 - `MinLength`: Minimum length ex: `MinLength(5)`

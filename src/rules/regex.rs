@@ -2,6 +2,18 @@ use regex_helper::Regex;
 use super::{check_permissively_option, check_permissively_ref_option};
 use super::Rule;
 
+/// Rule to constraint a [`String`] or `&str` to match a Regex
+///
+/// Works with [`Option`], just return `Ok(())` if it's [`None`]
+///
+/// # Example
+/// ```
+/// use type_rules::Validator;
+/// use type_rules::rules::RegEx;
+///
+/// #[derive(Validator)]
+/// struct Mail(#[rule(RegEx(r"^\S+@\S+\.\S+"))] String);
+/// ```
 pub struct RegEx<'a>(pub &'a str);
 
 impl<'a> Rule<String> for RegEx<'a> {
@@ -45,10 +57,10 @@ mod tests {
 
     #[test]
     fn regex_ok() {
-        assert_ok!(RegEx(r"^([a-z0-9_+]([a-z0-9_+.]*[a-z0-9_+])?)@([a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,6})").check("theo.oiry@yahoo.fr"));
+        assert_ok!(RegEx(r"^([a-z0-9_+]([a-z0-9_+.]*[a-z0-9_+])?)@([a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,6})").check("example@example.fr"));
     }
     #[test]
     fn regex_err() {
-        assert_err!(RegEx(r"^([a-z0-9_+]([a-z0-9_+.]*[a-z0-9_+])?)@([a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,6})").check("theo.oiryyahoo.fr"));
+        assert_err!(RegEx(r"^([a-z0-9_+]([a-z0-9_+.]*[a-z0-9_+])?)@([a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,6})").check("exampleexample.fr"));
     }
 }

@@ -1,10 +1,52 @@
 use super::check_permissively_option;
 use super::Rule;
 
+/// Rule to constraint the **minimum** and **maximum**
+/// size of a [`Vec<T>`]
+///
+/// Works with [`Option`], just return `Ok(())` if it's [`None`]
+///
+/// # Example
+/// ```
+/// use type_rules::Validator;
+/// use type_rules::rules::MinMaxSize;
+///
+/// #[derive(Validator)]
+/// struct Car {
+///     #[rule(MinMaxSize(4, 4))]
+///     wheels_diameter: Vec<f32>
+/// };
+/// ```
 pub struct MinMaxSize(pub usize, pub usize);
 
+/// Rule to constraint the **minimum**
+/// size of a [`Vec<T>`]
+///
+/// Works with [`Option`], just return `Ok(())` if it's [`None`]
+///
+/// # Example
+/// ```
+/// use type_rules::Validator;
+/// use type_rules::rules::MinSize;
+///
+/// #[derive(Validator)]
+/// struct NonEmptyVec<T>(#[rule(MinSize(1))] Vec<T>);
+/// ```
 pub struct MinSize(pub usize);
 
+/// Rule to constraint the **maximum**
+/// size of a [`Vec<T>`]
+///
+/// Works with [`Option`], just return `Ok(())` if it's [`None`]
+///
+/// # Example
+/// ```
+/// use type_rules::Validator;
+/// use type_rules::rules::MaxSize;
+///
+/// #[derive(Validator)]
+/// struct FollowedCategories(#[rule(MaxSize(100))] Vec<String>);
+/// ```
 pub struct MaxSize(pub usize);
 
 impl<T> Rule<Vec<T>> for MinMaxSize {

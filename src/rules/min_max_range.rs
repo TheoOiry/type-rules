@@ -1,10 +1,54 @@
 use super::check_permissively_option;
 use super::Rule;
 
+/// Rule to constraint the **minimum** and **maximum**
+/// range of any type that implement [`PartialOrd`]
+///
+/// Works with [`Option`], just return `Ok(())` if it's [`None`]
+///
+/// # Example
+/// ```
+/// use type_rules::Validator;
+/// use type_rules::rules::MinMaxRange;
+///
+/// #[derive(Validator)]
+/// struct QueryParameters{
+///     offset: u32,
+///     #[rule(MinMaxRange(5, 50))]
+///     limit: u8,
+/// }
+/// ```
 pub struct MinMaxRange<T: PartialOrd<T>>(pub T, pub T);
 
+/// Rule to constraint the **minimum**
+/// range of any type that implement [`PartialOrd`]
+///
+/// Works with [`Option`], just return `Ok(())` if it's [`None`]
+///
+/// # Example
+/// ```
+/// use type_rules::Validator;
+/// use type_rules::rules::MinRange;
+///
+/// #[derive(Validator)]
+/// struct NonZeroFloat(#[rule(MinRange(1_f32))] f32);
+/// ```
 pub struct MinRange<T: PartialOrd<T>>(pub T);
 
+/// Rule to constraint the **maximum**
+/// range of any type that implement [`PartialOrd`]
+///
+/// Works with [`Option`], just return `Ok(())` if it's [`None`]
+///
+/// # Example
+/// ```
+/// use type_rules::Validator;
+/// use type_rules::rules::MaxRange;
+/// use chrono::prelude::*;
+///
+/// #[derive(Validator)]
+/// struct AnniversaryDate(#[rule(MaxRange(Utc::now()))] DateTime<Utc>);
+/// ```
 pub struct MaxRange<T: PartialOrd<T>>(pub T);
 
 impl<T: PartialOrd<T>> Rule<T> for MinMaxRange<T> {

@@ -1,10 +1,54 @@
 use super::{check_permissively_option, check_permissively_ref_option};
 use super::Rule;
 
+/// Rule to constraint the **minimum** and **maximum**
+/// length of a [`String`] or `&str`
+///
+/// Works with [`Option`], just return `Ok(())` if it's [`None`]
+///
+/// # Example
+/// ```
+/// use type_rules::Validator;
+/// use type_rules::rules::MinMaxLength;
+///
+/// #[derive(Validator)]
+/// struct NewUser {
+///     #[rule(MinMaxLength(3, 50))]
+///     username: String,
+///     #[rule(MinMaxLength(8, 100))]
+///     password: String,
+/// }
+/// ```
 pub struct MinMaxLength(pub usize, pub usize);
 
+/// Rule to constraint the **minimum**
+/// length of a [`String`] or `&str`
+///
+/// Works with [`Option`], just return `Ok(())` if it's [`None`]
+///
+/// # Example
+/// ```
+/// use type_rules::Validator;
+/// use type_rules::rules::MinLength;
+///
+/// #[derive(Validator)]
+/// struct Password(#[rule(MinLength(8))] String);
+/// ```
 pub struct MinLength(pub usize);
 
+/// Rule to constraint the **maximum**
+/// length of a [`String`] or `&str`
+///
+/// Works with [`Option`], just return `Ok(())` if it's [`None`]
+///
+/// # Example
+/// ```
+/// use type_rules::Validator;
+/// use type_rules::rules::MaxLength;
+///
+/// #[derive(Validator)]
+/// struct Payload(#[rule(MaxLength(200))] String);
+/// ```
 pub struct MaxLength(pub usize);
 
 impl Rule<String> for MinMaxLength {

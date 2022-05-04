@@ -38,4 +38,4 @@ struct FloatWrapper(#[rule(MinMaxRange(0_f32, 100_f32))] f32);
 #[derive(Validator)]
 struct VecWrapper<T>(#[rule(MinMaxSize(1, 50))] Vec<T>);
 
-fn main() {}
+fn main() { }

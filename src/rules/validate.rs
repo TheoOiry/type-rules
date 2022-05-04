@@ -2,6 +2,26 @@ use super::check_permissively_option;
 use crate::Validator;
 use super::Rule;
 
+/// Rule to check the rules of the inner type
+///
+/// Works with [`Option`], just return `Ok(())` if it's [`None`]
+///
+/// # Example
+/// ```
+/// use type_rules::rules::{MaxLength, RegEx, Validate, MinMaxLength};
+/// use type_rules::Validator;
+///
+/// #[derive(Validator)]
+/// struct EmailWrapper(#[rule(MaxLength(100), RegEx(r"^\S+@\S+\.\S+"))] String);
+///
+/// #[derive(Validator)]
+/// struct User {
+///     #[rule(Validate())]
+///     email: EmailWrapper,
+///     #[rule(MinMaxLength(8, 50))]
+///     password: String,
+/// };
+/// ```
 pub struct Validate();
 
 impl<T: Validator> Rule<T> for Validate {
