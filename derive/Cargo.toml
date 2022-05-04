@@ -9,7 +9,7 @@ repository = "https://github.com/TheoOiry/type-rules"
 documentation = "https://docs.rs/types-rules"
 keywords = ["rule", "type", "contraint", "restrict", "validate"]
 categories = ["data-structures"]
-license = "MIT or Apache-2.0"
+license = "MIT OR Apache-2.0"
 authors = ["Théo Oiry <theo.oiry@yahoo.fr>"]
 
 [dependencies]
