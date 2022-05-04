@@ -14,7 +14,7 @@ A tool to easily constrain a struct and recover errors.
 ```toml
 # Cargo.toml
 [dependencies]
-type-rules = { version = "0.1", features = ["derive"] }
+type-rules = { version = "0.1", features = ["derive", "regex"] }
 ```
 
 ## Basic checking
@@ -158,4 +158,6 @@ Check the size of a `Vec<T>` :
 others :
 
 - `Validate`: Recursive checking ex: `Validate()`
-- `RegEx`: check if a `String` or `&str` matches the regex ex: `RegEx(r"^\S+@\S+\.\S+")`
+- `RegEx`: check if a `String` or `&str` matches the regex. 
+  You need the `regex` feature to use it.
+  ex: `RegEx(r"^\S+@\S+\.\S+")`

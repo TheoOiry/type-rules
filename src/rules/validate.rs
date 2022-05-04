@@ -8,18 +8,17 @@ use crate::Validator;
 ///
 /// # Example
 /// ```
-/// use type_rules::rules::{MaxLength, RegEx, Validate, MinMaxLength};
+/// use type_rules::rules::{MaxLength, MinLength, Validate, MinMaxLength};
 /// use type_rules::Validator;
 ///
 /// #[derive(Validator)]
-/// struct EmailWrapper(#[rule(MaxLength(100), RegEx(r"^\S+@\S+\.\S+"))] String);
+/// struct Password(#[rule(MinLength(8))] String);
 ///
 /// #[derive(Validator)]
 /// struct User {
+///     username: String,
 ///     #[rule(Validate())]
-///     email: EmailWrapper,
-///     #[rule(MinMaxLength(8, 50))]
-///     password: String,
+///     password: Password,
 /// };
 /// ```
 pub struct Validate();

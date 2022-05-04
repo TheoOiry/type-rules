@@ -4,6 +4,8 @@ use regex_helper::Regex;
 
 /// Rule to constraint a [`String`] or `&str` to match a Regex
 ///
+/// You need the `regex` feature to use it
+///
 /// Works with [`Option`], just return `Ok(())` if it's [`None`]
 ///
 /// # Example
