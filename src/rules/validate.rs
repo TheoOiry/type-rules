@@ -1,6 +1,6 @@
 use super::check_permissively_option;
-use crate::Validator;
 use super::Rule;
+use crate::Validator;
 
 /// Rule to check the rules of the inner type
 ///
@@ -38,9 +38,9 @@ impl<T: Validator> Rule<Option<T>> for Validate {
 
 #[cfg(test)]
 mod tests {
-    use claim::{ assert_ok, assert_err };
-    use crate::rules::{Rule, MaxLength, Validate};
+    use crate::rules::{MaxLength, Rule, Validate};
     use crate::Validator;
+    use claim::{assert_err, assert_ok};
 
     struct StringWrapper(String);
 

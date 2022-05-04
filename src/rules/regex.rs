@@ -1,6 +1,6 @@
-use regex_helper::Regex;
-use super::{check_permissively_option, check_permissively_ref_option};
 use super::Rule;
+use super::{check_permissively_option, check_permissively_ref_option};
+use regex_helper::Regex;
 
 /// Rule to constraint a [`String`] or `&str` to match a Regex
 ///
@@ -22,7 +22,6 @@ impl<'a> Rule<String> for RegEx<'a> {
     }
 }
 
-
 impl<'a> Rule<str> for RegEx<'a> {
     fn check(&self, value: &str) -> Result<(), String> {
         check(self.0, value)
@@ -34,7 +33,6 @@ impl<'a> Rule<Option<String>> for RegEx<'a> {
         check_permissively_option(self, value)
     }
 }
-
 
 impl<'a> Rule<Option<&str>> for RegEx<'a> {
     fn check(&self, value: &Option<&str>) -> Result<(), String> {
@@ -52,15 +50,15 @@ fn check(regex: &str, value: &str) -> Result<(), String> {
 
 #[cfg(test)]
 mod tests {
-    use claim::{ assert_ok, assert_err };
-    use crate::rules::{Rule, RegEx };
+    use crate::rules::{RegEx, Rule};
+    use claim::{assert_err, assert_ok};
 
     #[test]
     fn regex_ok() {
-        assert_ok!(RegEx(r"^([a-z0-9_+]([a-z0-9_+.]*[a-z0-9_+])?)@([a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,6})").check("example@example.fr"));
+        assert_ok!(RegEx(r"^\S+@\S+\.\S+").check("example@example.fr"));
     }
     #[test]
     fn regex_err() {
-        assert_err!(RegEx(r"^([a-z0-9_+]([a-z0-9_+.]*[a-z0-9_+])?)@([a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,6})").check("exampleexample.fr"));
+        assert_err!(RegEx(r"^\S+@\S+\.\S+").check("exampleexample.fr"));
     }
 }

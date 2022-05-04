@@ -106,7 +106,7 @@ impl<T> Rule<Option<Vec<T>>> for MinSize {
 
 #[cfg(test)]
 mod tests {
-    use crate::rules::{Rule, MinSize, MaxSize, MinMaxSize};
+    use crate::rules::{MaxSize, MinMaxSize, MinSize, Rule};
     use claim::{assert_err, assert_ok};
 
     #[test]
@@ -115,11 +115,11 @@ mod tests {
     }
     #[test]
     fn min_size_value_ok() {
-        assert_ok!(MinSize(1).check(&vec![1,2]));
+        assert_ok!(MinSize(1).check(&vec![1, 2]));
     }
     #[test]
     fn max_size_value_too_long() {
-        assert_err!(MaxSize(1).check(&vec![1,2]));
+        assert_err!(MaxSize(1).check(&vec![1, 2]));
     }
     #[test]
     fn max_size_value_ok() {
@@ -131,7 +131,7 @@ mod tests {
     }
     #[test]
     fn min_max_size_value_too_long() {
-        assert_err!(MinMaxSize(1, 2).check(&vec![1,2,3]));
+        assert_err!(MinMaxSize(1, 2).check(&vec![1, 2, 3]));
     }
     #[test]
     fn min_max_size_value_ok() {

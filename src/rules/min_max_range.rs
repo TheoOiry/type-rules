@@ -93,7 +93,6 @@ impl<T: PartialOrd<T>> Rule<Option<T>> for MinMaxRange<T> {
     }
 }
 
-
 impl<T: PartialOrd<T>> Rule<Option<T>> for MaxRange<T> {
     fn check(&self, value: &Option<T>) -> Result<(), String> {
         check_permissively_option(self, value)
@@ -108,7 +107,7 @@ impl<T: PartialOrd<T>> Rule<Option<T>> for MinRange<T> {
 
 #[cfg(test)]
 mod tests {
-    use crate::rules::{Rule, MinRange, MaxRange, MinMaxRange};
+    use crate::rules::{MaxRange, MinMaxRange, MinRange, Rule};
     use claim::{assert_err, assert_ok};
 
     #[test]

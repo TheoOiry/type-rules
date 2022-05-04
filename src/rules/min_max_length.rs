@@ -1,5 +1,5 @@
-use super::{check_permissively_option, check_permissively_ref_option};
 use super::Rule;
+use super::{check_permissively_option, check_permissively_ref_option};
 
 /// Rule to constraint the **minimum** and **maximum**
 /// length of a [`String`] or `&str`
@@ -141,7 +141,7 @@ impl Rule<Option<&str>> for MaxLength {
 
 #[cfg(test)]
 mod tests {
-    use crate::rules::{Rule, MinLength, MaxLength, MinMaxLength};
+    use crate::rules::{MaxLength, MinLength, MinMaxLength, Rule};
     use claim::{assert_err, assert_ok};
 
     #[test]

@@ -1,14 +1,8 @@
 use chrono::prelude::*;
-use type_rules::Validator;
 use type_rules::rules::{
-    MaxLength,
-    MinMaxLength,
-    MinMaxSize,
-    MinMaxRange,
-    MaxRange,
-    RegEx,
-    Validate
+    MaxLength, MaxRange, MinMaxLength, MinMaxRange, MinMaxSize, RegEx, Validate,
 };
+use type_rules::Validator;
 
 #[derive(Validator)]
 struct Email(
@@ -38,4 +32,4 @@ struct FloatWrapper(#[rule(MinMaxRange(0_f32, 100_f32))] f32);
 #[derive(Validator)]
 struct VecWrapper<T>(#[rule(MinMaxSize(1, 50))] Vec<T>);
 
-fn main() { }
+fn main() {}
