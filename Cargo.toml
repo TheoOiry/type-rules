@@ -17,3 +17,10 @@ chrono = "0.4.19"
 
 [features]
 derive = ["type-rules-derive"]
+
+[[example]]
+name = "derive"
+path = "examples/derive.rs"
+required-features = [
+    "derive",
+]
