@@ -3,7 +3,8 @@ mod min_max_range;
 mod min_max_size;
 mod validate;
 
-#[cfg(feature = "regex_helper")]
+#[cfg(feature = "regex")]
+#[cfg_attr(docsrs, doc(cfg(feature = "regex")))]
 mod regex;
 
 pub use self::min_max_length::*;
@@ -11,7 +12,8 @@ pub use self::min_max_range::*;
 pub use self::min_max_size::*;
 pub use self::validate::*;
 
-#[cfg(feature = "regex_helper")]
+#[cfg(feature = "regex")]
+#[cfg_attr(docsrs, doc(cfg(feature = "regex")))]
 pub use self::regex::*;
 
 /// Define a rule for a type

@@ -1,8 +1,8 @@
+#![cfg_attr(docsrs, feature(doc_cfg))]
 #![doc = include_str!("../README.md")]
-
 pub mod rules;
 
-#[cfg(feature = "type-rules-derive")]
+#[cfg(feature = "derive")]
 #[doc(hidden)]
 pub use type_rules_derive::*;
 
