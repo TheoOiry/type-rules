@@ -10,20 +10,20 @@ pub use self::min_max_size::*;
 pub use self::validate::*;
 pub use self::regex::*;
 
-pub trait Checker<T: ?Sized> {
+pub trait Rule<T: ?Sized> {
     fn check(&self, value: &T) -> Result<(), String>;
 }
 
-fn check_permissively_option<U: Checker<T>, T>(checker: &U, value: &Option<T>) -> Result<(), String> {
+fn check_permissively_option<U: Rule<T>, T>(rule: &U, value: &Option<T>) -> Result<(), String> {
     match value {
-        Some(val) => checker.check(val),
+        Some(val) => rule.check(val),
         None => Ok(())
     }
 }
 
-fn check_permissively_ref_option<U: Checker<T>, T: ?Sized>(checker: &U, value: &Option<&T>) -> Result<(), String> {
+fn check_permissively_ref_option<U: Rule<T>, T: ?Sized>(rule: &U, value: &Option<&T>) -> Result<(), String> {
     match value {
-        Some(val) => checker.check(*val),
+        Some(val) => rule.check(*val),
         None => Ok(())
     }
 }

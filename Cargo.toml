@@ -2,14 +2,18 @@
 members = [".", "derive"]
 
 [package]
-name = "type_checker"
+name = "type-rules"
 version = "0.1.0"
 edition = "2021"
 license = "Apache-2.0"
 
 [dependencies]
-type_checker_derive = { optional = true, path = "derive" }
+type-rules-derive = { optional = true, path = "derive" }
 regex_helper = { package = "regex", version = "1.5.4" }
 
+[dev-dependencies]
+claim = "0.5.0"
+chrono = "0.4.19"
+
 [features]
-derive = ["type_checker_derive"]
+derive = ["type-rules-derive"]

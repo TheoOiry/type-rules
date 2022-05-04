@@ -1,8 +1,10 @@
-pub mod checkers;
+pub mod rules;
 
-#[cfg(feature = "type_checker_derive")]
+#[cfg(feature = "type-rules-derive")]
 #[doc(hidden)]
-pub use type_checker_derive::*;
+pub use type_rules_derive::*;
+
+pub use rules::Rule;
 
 pub trait Validator {
     fn check_validity(&self) -> Result<(), String>;

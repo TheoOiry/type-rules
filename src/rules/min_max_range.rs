@@ -1,5 +1,5 @@
 use super::check_permissively_option;
-use super::Checker;
+use super::Rule;
 
 pub struct MinMaxRange<T: PartialOrd<T>>(pub T, pub T);
 
@@ -7,7 +7,7 @@ pub struct MinRange<T: PartialOrd<T>>(pub T);
 
 pub struct MaxRange<T: PartialOrd<T>>(pub T);
 
-impl<T: PartialOrd<T>> Checker<T> for MinMaxRange<T> {
+impl<T: PartialOrd<T>> Rule<T> for MinMaxRange<T> {
     fn check(&self, value: &T) -> Result<(), String> {
         check_value_too_low(value, &self.0)?;
         check_value_too_high(value, &self.1)?;
@@ -15,14 +15,14 @@ impl<T: PartialOrd<T>> Checker<T> for MinMaxRange<T> {
     }
 }
 
-impl<T: PartialOrd<T>> Checker<T> for MinRange<T> {
+impl<T: PartialOrd<T>> Rule<T> for MinRange<T> {
     fn check(&self, value: &T) -> Result<(), String> {
         check_value_too_low(value, &self.0)?;
         Ok(())
     }
 }
 
-impl<T: PartialOrd<T>> Checker<T> for MaxRange<T> {
+impl<T: PartialOrd<T>> Rule<T> for MaxRange<T> {
     fn check(&self, value: &T) -> Result<(), String> {
         check_value_too_high(value, &self.0)?;
         Ok(())
@@ -43,20 +43,20 @@ fn check_value_too_high<T: PartialOrd<T>>(value: &T, max_range: &T) -> Result<()
     Ok(())
 }
 
-impl<T: PartialOrd<T>> Checker<Option<T>> for MinMaxRange<T> {
+impl<T: PartialOrd<T>> Rule<Option<T>> for MinMaxRange<T> {
     fn check(&self, value: &Option<T>) -> Result<(), String> {
         check_permissively_option(self, value)
     }
 }
 
 
-impl<T: PartialOrd<T>> Checker<Option<T>> for MaxRange<T> {
+impl<T: PartialOrd<T>> Rule<Option<T>> for MaxRange<T> {
     fn check(&self, value: &Option<T>) -> Result<(), String> {
         check_permissively_option(self, value)
     }
 }
 
-impl<T: PartialOrd<T>> Checker<Option<T>> for MinRange<T> {
+impl<T: PartialOrd<T>> Rule<Option<T>> for MinRange<T> {
     fn check(&self, value: &Option<T>) -> Result<(), String> {
         check_permissively_option(self, value)
     }
@@ -64,7 +64,7 @@ impl<T: PartialOrd<T>> Checker<Option<T>> for MinRange<T> {
 
 #[cfg(test)]
 mod tests {
-    use crate::checkers::{Checker, MinRange, MaxRange, MinMaxRange};
+    use crate::rules::{Rule, MinRange, MaxRange, MinMaxRange};
     use claim::{assert_err, assert_ok};
 
     #[test]

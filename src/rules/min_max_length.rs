@@ -1,5 +1,5 @@
-use crate::checkers::{check_permissively_option, check_permissively_ref_option};
-use super::Checker;
+use super::{check_permissively_option, check_permissively_ref_option};
+use super::Rule;
 
 pub struct MinMaxLength(pub usize, pub usize);
 
@@ -7,39 +7,39 @@ pub struct MinLength(pub usize);
 
 pub struct MaxLength(pub usize);
 
-impl Checker<String> for MinMaxLength {
+impl Rule<String> for MinMaxLength {
     fn check(&self, value: &String) -> Result<(), String> {
         check_value_too_short(value.len(), self.0)?;
         check_value_too_long(value.len(), self.1)
     }
 }
 
-impl Checker<str> for MinMaxLength {
+impl Rule<str> for MinMaxLength {
     fn check(&self, value: &str) -> Result<(), String> {
         check_value_too_short(value.len(), self.0)?;
         check_value_too_long(value.len(), self.1)
     }
 }
 
-impl Checker<String> for MaxLength {
+impl Rule<String> for MaxLength {
     fn check(&self, value: &String) -> Result<(), String> {
         check_value_too_long(value.len(), self.0)
     }
 }
 
-impl Checker<str> for MaxLength {
+impl Rule<str> for MaxLength {
     fn check(&self, value: &str) -> Result<(), String> {
         check_value_too_long(value.len(), self.0)
     }
 }
 
-impl Checker<String> for MinLength {
+impl Rule<String> for MinLength {
     fn check(&self, value: &String) -> Result<(), String> {
         check_value_too_short(value.len(), self.0)
     }
 }
 
-impl Checker<str> for MinLength {
+impl Rule<str> for MinLength {
     fn check(&self, value: &str) -> Result<(), String> {
         check_value_too_short(value.len(), self.0)
     }
@@ -59,37 +59,37 @@ fn check_value_too_long(length: usize, max_length: usize) -> Result<(), String> 
     Ok(())
 }
 
-impl Checker<Option<String>> for MinMaxLength {
+impl Rule<Option<String>> for MinMaxLength {
     fn check(&self, value: &Option<String>) -> Result<(), String> {
         check_permissively_option(self, value)
     }
 }
 
-impl Checker<Option<&str>> for MinMaxLength {
+impl Rule<Option<&str>> for MinMaxLength {
     fn check(&self, value: &Option<&str>) -> Result<(), String> {
         check_permissively_ref_option(self, value)
     }
 }
 
-impl Checker<Option<String>> for MinLength {
+impl Rule<Option<String>> for MinLength {
     fn check(&self, value: &Option<String>) -> Result<(), String> {
         check_permissively_option(self, value)
     }
 }
 
-impl Checker<Option<&str>> for MinLength {
+impl Rule<Option<&str>> for MinLength {
     fn check(&self, value: &Option<&str>) -> Result<(), String> {
         check_permissively_ref_option(self, value)
     }
 }
 
-impl Checker<Option<String>> for MaxLength {
+impl Rule<Option<String>> for MaxLength {
     fn check(&self, value: &Option<String>) -> Result<(), String> {
         check_permissively_option(self, value)
     }
 }
 
-impl Checker<Option<&str>> for MaxLength {
+impl Rule<Option<&str>> for MaxLength {
     fn check(&self, value: &Option<&str>) -> Result<(), String> {
         check_permissively_ref_option(self, value)
     }
@@ -97,7 +97,7 @@ impl Checker<Option<&str>> for MaxLength {
 
 #[cfg(test)]
 mod tests {
-    use crate::checkers::{Checker, MinLength, MaxLength, MinMaxLength};
+    use crate::rules::{Rule, MinLength, MaxLength, MinMaxLength};
     use claim::{assert_err, assert_ok};
 
     #[test]

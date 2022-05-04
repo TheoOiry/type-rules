@@ -1,5 +1,5 @@
-use crate::checkers::check_permissively_option;
-use super::Checker;
+use super::check_permissively_option;
+use super::Rule;
 
 pub struct MinMaxSize(pub usize, pub usize);
 
@@ -7,7 +7,7 @@ pub struct MinSize(pub usize);
 
 pub struct MaxSize(pub usize);
 
-impl<T> Checker<Vec<T>> for MinMaxSize {
+impl<T> Rule<Vec<T>> for MinMaxSize {
     fn check(&self, value: &Vec<T>) -> Result<(), String> {
         let size = value.len();
         check_value_too_short(size, self.0)?;
@@ -16,14 +16,14 @@ impl<T> Checker<Vec<T>> for MinMaxSize {
     }
 }
 
-impl<T> Checker<Vec<T>> for MinSize {
+impl<T> Rule<Vec<T>> for MinSize {
     fn check(&self, value: &Vec<T>) -> Result<(), String> {
         check_value_too_short(value.len(), self.0)?;
         Ok(())
     }
 }
 
-impl<T> Checker<Vec<T>> for MaxSize {
+impl<T> Rule<Vec<T>> for MaxSize {
     fn check(&self, value: &Vec<T>) -> Result<(), String> {
         check_value_too_long(value.len(), self.0)?;
         Ok(())
@@ -44,19 +44,19 @@ fn check_value_too_long(length: usize, max_size: usize) -> Result<(), String> {
     Ok(())
 }
 
-impl<T> Checker<Option<Vec<T>>> for MinMaxSize {
+impl<T> Rule<Option<Vec<T>>> for MinMaxSize {
     fn check(&self, value: &Option<Vec<T>>) -> Result<(), String> {
         check_permissively_option(self, value)
     }
 }
 
-impl<T> Checker<Option<Vec<T>>> for MaxSize {
+impl<T> Rule<Option<Vec<T>>> for MaxSize {
     fn check(&self, value: &Option<Vec<T>>) -> Result<(), String> {
         check_permissively_option(self, value)
     }
 }
 
-impl<T> Checker<Option<Vec<T>>> for MinSize {
+impl<T> Rule<Option<Vec<T>>> for MinSize {
     fn check(&self, value: &Option<Vec<T>>) -> Result<(), String> {
         check_permissively_option(self, value)
     }
@@ -64,7 +64,7 @@ impl<T> Checker<Option<Vec<T>>> for MinSize {
 
 #[cfg(test)]
 mod tests {
-    use crate::checkers::{Checker, MinSize, MaxSize, MinMaxSize};
+    use crate::rules::{Rule, MinSize, MaxSize, MinMaxSize};
     use claim::{assert_err, assert_ok};
 
     #[test]

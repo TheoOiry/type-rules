@@ -1,30 +1,30 @@
 use regex_helper::Regex;
-use crate::checkers::{check_permissively_option, check_permissively_ref_option};
-use super::Checker;
+use super::{check_permissively_option, check_permissively_ref_option};
+use super::Rule;
 
 pub struct RegEx<'a>(pub &'a str);
 
-impl<'a> Checker<String> for RegEx<'a> {
+impl<'a> Rule<String> for RegEx<'a> {
     fn check(&self, value: &String) -> Result<(), String> {
         check(self.0, value)
     }
 }
 
 
-impl<'a> Checker<str> for RegEx<'a> {
+impl<'a> Rule<str> for RegEx<'a> {
     fn check(&self, value: &str) -> Result<(), String> {
         check(self.0, value)
     }
 }
 
-impl<'a> Checker<Option<String>> for RegEx<'a> {
+impl<'a> Rule<Option<String>> for RegEx<'a> {
     fn check(&self, value: &Option<String>) -> Result<(), String> {
         check_permissively_option(self, value)
     }
 }
 
 
-impl<'a> Checker<Option<&str>> for RegEx<'a> {
+impl<'a> Rule<Option<&str>> for RegEx<'a> {
     fn check(&self, value: &Option<&str>) -> Result<(), String> {
         check_permissively_ref_option(self, value)
     }
@@ -41,7 +41,7 @@ fn check(regex: &str, value: &str) -> Result<(), String> {
 #[cfg(test)]
 mod tests {
     use claim::{ assert_ok, assert_err };
-    use crate::checkers::{ Checker, RegEx };
+    use crate::rules::{Rule, RegEx };
 
     #[test]
     fn regex_ok() {

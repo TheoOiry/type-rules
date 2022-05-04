@@ -1,16 +1,16 @@
-use crate::checkers::check_permissively_option;
+use super::check_permissively_option;
 use crate::Validator;
-use super::Checker;
+use super::Rule;
 
 pub struct Validate();
 
-impl<T: Validator> Checker<T> for Validate {
+impl<T: Validator> Rule<T> for Validate {
     fn check(&self, value: &T) -> Result<(), String> {
         value.check_validity()
     }
 }
 
-impl<T: Validator> Checker<Option<T>> for Validate {
+impl<T: Validator> Rule<Option<T>> for Validate {
     fn check(&self, value: &Option<T>) -> Result<(), String> {
         check_permissively_option(self, value)
     }
@@ -19,7 +19,7 @@ impl<T: Validator> Checker<Option<T>> for Validate {
 #[cfg(test)]
 mod tests {
     use claim::{ assert_ok, assert_err };
-    use crate::checkers::{Checker, MaxLength, Validate};
+    use crate::rules::{Rule, MaxLength, Validate};
     use crate::Validator;
 
     struct StringWrapper(String);

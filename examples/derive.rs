@@ -1,6 +1,6 @@
 use chrono::prelude::*;
-use type_checker::Validator;
-use type_checker::checkers::{
+use type_rules::Validator;
+use type_rules::rules::{
     MaxLength,
     MinMaxLength,
     MinMaxSize,
@@ -12,7 +12,7 @@ use type_checker::checkers::{
 
 #[derive(Validator)]
 struct Email(
-    #[check(
+    #[rule(
         MaxLength(200),
         RegEx(
             r"^([a-z0-9_+]([a-z0-9_+.]*[a-z0-9_+])?)@([a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,6})"
@@ -23,17 +23,17 @@ struct Email(
 
 #[derive(Validator)]
 struct SignUpForm {
-    #[check(Validate())]
+    #[rule(Validate())]
     email: Email,
-    #[check(MinMaxLength(8, 50))]
+    #[rule(MinMaxLength(8, 50))]
     password: String,
 }
 
 #[derive(Validator)]
-struct PastDate(#[check(MaxRange(Utc::now()))] DateTime<Utc>);
+struct PastDate(#[rule(MaxRange(Utc::now()))] DateTime<Utc>);
 
 #[derive(Validator)]
-struct FloatWrapper(#[check(MinMaxRange(0_f32, 100_f32))] f32);
+struct FloatWrapper(#[rule(MinMaxRange(0_f32, 100_f32))] f32);
 
 #[derive(Validator)]
-struct VecWrapper<T>(#[check(MinMaxSize(1, 50))] Vec<T>);
+struct VecWrapper<T>(#[rule(MinMaxSize(1, 50))] Vec<T>);

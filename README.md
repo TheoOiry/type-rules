@@ -1,4 +1,4 @@
-# type-checker
+# type-rules
 
 A tool to easily constrain a struct and recover errors.
 
@@ -7,14 +7,14 @@ A tool to easily constrain a struct and recover errors.
 1. [Install](#install)
 2. [Basic checking](#basic-checking)
 3. [Advanced checking](#advanced-checking)
-4. [Make your own checker](#make-your-own-checker)
-5. [Checkers list](#checkers-list)
+4. [Make your own rule](#make-your-own-rule)
+5. [Rules list](#rules-list)
 
 ## Install
 ```toml
 # Cargo.toml
 [dependencies]
-type_checker = { version = "0.1", features = ["derive"] }
+type-rules = { version = "0.1", features = ["derive"] }
 ```
 
 ## Basic checking
@@ -22,15 +22,15 @@ type_checker = { version = "0.1", features = ["derive"] }
 You can declare a struct and impose some constraints on each field:
 
 ```rust
-use type_checker::Validator;
-//Don't forget to import the used checkers.
-use type_checker::checkers::{MaxLength, MinMaxLength, RegEx};
+use type_rules::Validator;
+//Don't forget to import the used rules.
+use type_rules::rules::{MaxLength, MinMaxLength, RegEx};
 
 #[derive(Validator)]
 struct NewUser {
-    #[check(MaxLength(100), RegEx(r"^\S+@\S+\.\S+"))]
+    #[rule(MaxLength(100), RegEx(r"^\S+@\S+\.\S+"))]
     email: String,
-    #[check(MinMaxLength(8, 50))]
+    #[rule(MinMaxLength(8, 50))]
     password: String,
 }
 ```
@@ -52,68 +52,65 @@ new_user.check_validity().unwrap(); //Value is too short
 
 ## Advanced checking
 
-To check recursively, you can use the `Validate` checker
+To check recursively, you can use the `Validate` rule
 
 ```rust
 #[derive(Validator)]
-struct EmailWrapper(#[check(MaxLength(100), RegEx(r"^\S+@\S+\.\S+"))] String);
+struct EmailWrapper(#[rule(MaxLength(100), RegEx(r"^\S+@\S+\.\S+"))] String);
 
 #[derive(Validator)]
 struct User {
-    #[check(Validate())]
+    #[rule(Validate())]
     email: EmailWrapper,
-    #[check(MinMaxLength(8, 50))]
+    #[rule(MinMaxLength(8, 50))]
     password: String,
 }
 ```
 
-You can use expressions directly in check derive attribute.
+You can use expressions directly in rule derive attribute.
 
-For example you can use const or function directly in the checker parameters:
+For example, you can use const or function directly in the checker parameters:
 
 ```rust
-use chrono::prelude::*;
-use type_checker::Validator;
-use type_checker::checkers::{MaxRange, MinLength};
-
+#[derive(Validator)]
+struct PastDate(#[rule(MaxRange(Utc::now()))] DateTime<Utc>);
+```
+```rust
 const MIN_PASSWORD_LENGTH: usize = 8;
 
 #[derive(Validator)]
-struct Password(#[check(MinLength(MIN_PASSWORD_LENGTH))] String);
-
-#[derive(Validator)]
-struct PastDate(#[check(MaxRange(Utc::now()))] DateTime<Utc>);
+struct Password(#[rule(MinLength(MIN_PASSWORD_LENGTH))] String);
 ```
 
 Or use expressions to express a checker directly.
-Here is an example of using a checker with more complex values:
+Here is an example of using a rule with more complex values:
 
 ```rust
-fn generate_max_payload_checker() -> MaxLength {
+fn generate_max_payload_rule() -> MaxLength {
     MaxLength(match env::var("MAX_PAYLOAD") {
-        Ok(val) => val.parse::<usize>().unwrap_or_else(|_| 10000),
+        Ok(val) => val.parse().unwrap_or_else(|_| 10000),
         Err(_) => 10000,
     })
 }
 
 #[derive(Validator)]
-struct Payload(#[check(generate_max_payload_checker())] String);
+struct Payload(#[rule(generate_max_payload_rule())] String);
 ```
 
-In this case the `generate_max_payload_checker` function is executed at each check
+In this case the `generate_max_payload_rule` function is executed at each check
 
 ## Make your own checker
 
-If you need a specific checker, just make a tuple struct (or struct if you make the declaration outside the struct definition)
-that implements the `Checker` feature :
+If you need a specific rule, just make a tuple struct (or struct if you make the declaration outside the struct definition)
+that implements the `Rule` feature :
 
 ```rust
-use type_checker::checkers::Checker;
-use type_checker::Validator;
+use type_rules::Rule;
+use type_rules::Validator;
 
 struct IsEven();
 
-impl Checker<i32> for IsEven {
+impl Rule<i32> for IsEven {
     fn check(&self, value: &i32) -> Result<(), String> {
         if value % 2 == 0 {
             Ok(())
@@ -124,7 +121,7 @@ impl Checker<i32> for IsEven {
 }
 
 #[derive(Validator)]
-struct MyInteger(#[check(IsEven())] i32);
+struct MyInteger(#[rule(IsEven())] i32);
 ```
 
 ## Checkers list
