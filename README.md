@@ -1,6 +1,6 @@
 # type-checker
 
-A tool to easly constraint a struct and retrieves errors 
+A tool to easily constrain a struct and recover errors.
 
 ## Table of Contents
 
@@ -23,7 +23,7 @@ You can declare a struct and impose some constraints on each field:
 
 ```rust
 use type_checker::Validator;
-//Don't forget to import the checkers used.
+//Don't forget to import the used checkers.
 use type_checker::checkers::{MaxLength, MinMaxLength, RegEx};
 
 #[derive(Validator)]
@@ -39,12 +39,12 @@ Then check the validity like this:
 
 ```rust
 let new_user = NewUser {
-    email: "example@example.com".to_string(),
+    email: "examples@examples.com".to_string(),
     password: "OPw$5%hJ".to_string(),
 };
 new_user.check_validity().unwrap(); //OK
 let new_user = NewUser {
-    email: "example@example.com".to_string(),
+    email: "examples@examples.com".to_string(),
     password: "O".to_string(),
 };
 new_user.check_validity().unwrap(); //Value is too short
