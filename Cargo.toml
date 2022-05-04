@@ -3,13 +3,13 @@ members = [".", "derive"]
 
 [package]
 name = "type-rules"
-version = "0.1.0"
+version = "0.1.1"
 readme = "README.md"
 edition = "2021"
 description = "A crate to easily constrain a struct"
 homepage = "https://github.com/TheoOiry/type-rules"
 repository = "https://github.com/TheoOiry/type-rules"
-documentation = "https://docs.rs/types-rules"
+documentation = "https://docs.rs/type-rules"
 keywords = ["rule", "type", "contraint", "restrict", "validate"]
 categories = ["data-structures"]
 license = "MIT OR Apache-2.0"
@@ -20,7 +20,7 @@ features = ["regex"]
 rustdoc-args = ["--cfg", "docsrs"]
 
 [dependencies]
-type-rules-derive = { optional = true, path = "derive", version = "0.1.0" }
+type-rules-derive = { optional = true, path = "derive", version = "0.1.1" }
 regex_helper = { optional = true, package = "regex", version = "1.5.4" }
 
 [dev-dependencies]
