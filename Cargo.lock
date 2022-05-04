@@ -129,7 +129,7 @@ dependencies = [
 
 [[package]]
 name = "type-rules"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "chrono",
  "claim",
@@ -139,7 +139,7 @@ dependencies = [
 
 [[package]]
 name = "type-rules-derive"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "proc-macro2",
  "quote",
