@@ -1,6 +1,5 @@
 [workspace]
 members = [".", "derive"]
-exclude = ["example"]
 
 [package]
 name = "type_checker"
