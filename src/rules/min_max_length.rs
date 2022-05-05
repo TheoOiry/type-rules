@@ -1,7 +1,8 @@
 use super::Rule;
 
 /// Rule to constraint the **minimum** and **maximum**
-/// length of a [`String`] or `&str`
+/// length of any type that implements [`AsRef<str>`] such
+/// as [`String`] or `&str`
 ///
 /// # Example
 /// ```
@@ -19,7 +20,8 @@ use super::Rule;
 pub struct MinMaxLength(pub usize, pub usize);
 
 /// Rule to constraint the **minimum**
-/// length of a [`String`] or `&str`
+/// length of any type that implements [`AsRef<str>`] such
+/// as [`String`] or `&str`
 ///
 /// # Example
 /// ```
@@ -32,7 +34,8 @@ pub struct MinMaxLength(pub usize, pub usize);
 pub struct MinLength(pub usize);
 
 /// Rule to constraint the **maximum**
-/// length of a [`String`] or `&str`
+/// length of any type that implements [`AsRef<str>`] such
+/// as [`String`] or `&str`
 ///
 /// # Example
 /// ```
@@ -44,40 +47,24 @@ pub struct MinLength(pub usize);
 /// ```
 pub struct MaxLength(pub usize);
 
-impl Rule<String> for MinMaxLength {
-    fn check(&self, value: &String) -> Result<(), String> {
+impl<T: AsRef<str> + ?Sized> Rule<T> for MinMaxLength {
+    fn check(&self, value: &T) -> Result<(), String> {
+        let value = value.as_ref();
         check_value_too_short(value.len(), self.0)?;
         check_value_too_long(value.len(), self.1)
     }
 }
 
-impl Rule<str> for MinMaxLength {
-    fn check(&self, value: &str) -> Result<(), String> {
-        check_value_too_short(value.len(), self.0)?;
-        check_value_too_long(value.len(), self.1)
-    }
-}
-
-impl Rule<String> for MaxLength {
-    fn check(&self, value: &String) -> Result<(), String> {
+impl<T: AsRef<str> + ?Sized> Rule<T> for MaxLength {
+    fn check(&self, value: &T) -> Result<(), String> {
+        let value = value.as_ref();
         check_value_too_long(value.len(), self.0)
     }
 }
 
-impl Rule<str> for MaxLength {
-    fn check(&self, value: &str) -> Result<(), String> {
-        check_value_too_long(value.len(), self.0)
-    }
-}
-
-impl Rule<String> for MinLength {
-    fn check(&self, value: &String) -> Result<(), String> {
-        check_value_too_short(value.len(), self.0)
-    }
-}
-
-impl Rule<str> for MinLength {
-    fn check(&self, value: &str) -> Result<(), String> {
+impl<T: AsRef<str> + ?Sized> Rule<T> for MinLength {
+    fn check(&self, value: &T) -> Result<(), String> {
+        let value = value.as_ref();
         check_value_too_short(value.len(), self.0)
     }
 }

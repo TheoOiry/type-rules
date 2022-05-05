@@ -1,11 +1,10 @@
 use super::Rule;
 use regex_helper::Regex;
 
-/// Rule to constraint a [`String`] or `&str` to match a Regex
+/// Rule to constraint any type that implements [`AsRef<str>`] such
+/// as [`String`] or `&str` to match a Regex
 ///
 /// You need the `regex` feature to use it
-///
-/// Works with [`Option`], just return `Ok(())` if it's [`None`]
 ///
 /// # Example
 /// ```
@@ -17,15 +16,9 @@ use regex_helper::Regex;
 /// ```
 pub struct RegEx<'a>(pub &'a str);
 
-impl<'a> Rule<String> for RegEx<'a> {
-    fn check(&self, value: &String) -> Result<(), String> {
-        check(self.0, value)
-    }
-}
-
-impl<'a> Rule<str> for RegEx<'a> {
-    fn check(&self, value: &str) -> Result<(), String> {
-        check(self.0, value)
+impl<'a, T: AsRef<str> + ?Sized> Rule<T> for RegEx<'a> {
+    fn check(&self, value: &T) -> Result<(), String> {
+        check(self.0, value.as_ref())
     }
 }
 

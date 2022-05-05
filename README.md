@@ -147,10 +147,13 @@ struct MyInteger(#[rule(IsEven())] i32);
 
 ## Rules list
 
-Here a list of the rules you can find in this crate, 
-if you want more details go to the rule definition.
+Here a list of the rules you can find in this crate.
 
-Check the length of a `String` or `&str`:
+Each rule has its own [documentation](https://docs.rs/type-rules/0.1.2/type_rules/rules/index.html) 
+with examples.
+
+Check the length of any type that implements `AsRef<str>` such
+as `String` or `&str`:
 - `MinLength`: Minimum length ex: `MinLength(5)`
 - `MaxLength`: Maximum length ex: `MaxLength(20)`
 - `MinMaxLength`: Minimum and maximum length ex: `MinMaxLength(5, 20)`
@@ -172,6 +175,6 @@ others :
 - `Eval`: Rule to constrain any type to a predicate ex: `Eval(predicate, "Error message")`
 - `Validate`: Recursive checking ex: `Validate()`
 - `All`: Rule to constrain a collection to valid the specified rule ex: `All(MinLength(1), "You can't use empty string")`
-- `RegEx`: check if a `String` or `&str` matches the regex. 
+- `RegEx`: check if a type that implement `AsRef<str>` (String, &str, ...) matches the regex. 
   You need the `regex` feature to use it.
   ex: `RegEx(r"^\S+@\S+\.\S+")`
