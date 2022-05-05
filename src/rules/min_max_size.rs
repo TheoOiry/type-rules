@@ -1,10 +1,7 @@
-use super::check_permissively_option;
 use super::Rule;
 
 /// Rule to constraint the **minimum** and **maximum**
 /// size of a [`Vec<T>`]
-///
-/// Works with [`Option`], just return `Ok(())` if it's [`None`]
 ///
 /// # Example
 /// ```
@@ -22,8 +19,6 @@ pub struct MinMaxSize(pub usize, pub usize);
 /// Rule to constraint the **minimum**
 /// size of a [`Vec<T>`]
 ///
-/// Works with [`Option`], just return `Ok(())` if it's [`None`]
-///
 /// # Example
 /// ```
 /// use type_rules::Validator;
@@ -36,8 +31,6 @@ pub struct MinSize(pub usize);
 
 /// Rule to constraint the **maximum**
 /// size of a [`Vec<T>`]
-///
-/// Works with [`Option`], just return `Ok(())` if it's [`None`]
 ///
 /// # Example
 /// ```
@@ -84,24 +77,6 @@ fn check_value_too_long(length: usize, max_size: usize) -> Result<(), String> {
         return Err(String::from("Collection is too long"));
     }
     Ok(())
-}
-
-impl<T> Rule<Option<Vec<T>>> for MinMaxSize {
-    fn check(&self, value: &Option<Vec<T>>) -> Result<(), String> {
-        check_permissively_option(self, value)
-    }
-}
-
-impl<T> Rule<Option<Vec<T>>> for MaxSize {
-    fn check(&self, value: &Option<Vec<T>>) -> Result<(), String> {
-        check_permissively_option(self, value)
-    }
-}
-
-impl<T> Rule<Option<Vec<T>>> for MinSize {
-    fn check(&self, value: &Option<Vec<T>>) -> Result<(), String> {
-        check_permissively_option(self, value)
-    }
 }
 
 #[cfg(test)]

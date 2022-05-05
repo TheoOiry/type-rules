@@ -1,10 +1,7 @@
-use super::check_permissively_option;
 use super::Rule;
 use crate::Validator;
 
 /// Rule to check the rules of the inner type
-///
-/// Works with [`Option`], just return `Ok(())` if it's [`None`]
 ///
 /// # Example
 /// ```
@@ -26,12 +23,6 @@ pub struct Validate();
 impl<T: Validator> Rule<T> for Validate {
     fn check(&self, value: &T) -> Result<(), String> {
         value.check_validity()
-    }
-}
-
-impl<T: Validator> Rule<Option<T>> for Validate {
-    fn check(&self, value: &Option<T>) -> Result<(), String> {
-        check_permissively_option(self, value)
     }
 }
 

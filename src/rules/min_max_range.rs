@@ -1,10 +1,7 @@
-use super::check_permissively_option;
 use super::Rule;
 
 /// Rule to constraint the **minimum** and **maximum**
 /// range of any type that implement [`PartialOrd`]
-///
-/// Works with [`Option`], just return `Ok(())` if it's [`None`]
 ///
 /// # Example
 /// ```
@@ -23,8 +20,6 @@ pub struct MinMaxRange<T: PartialOrd<T>>(pub T, pub T);
 /// Rule to constraint the **minimum**
 /// range of any type that implement [`PartialOrd`]
 ///
-/// Works with [`Option`], just return `Ok(())` if it's [`None`]
-///
 /// # Example
 /// ```
 /// use type_rules::Validator;
@@ -38,8 +33,6 @@ pub struct MinRange<T: PartialOrd<T>>(pub T);
 /// Rule to constraint the **maximum**
 /// range of any type that implement [`PartialOrd`]
 ///
-/// Works with [`Option`], just return `Ok(())` if it's [`None`]
-///
 /// # Example
 /// ```
 /// use type_rules::Validator;
@@ -47,7 +40,7 @@ pub struct MinRange<T: PartialOrd<T>>(pub T);
 /// use chrono::prelude::*;
 ///
 /// #[derive(Validator)]
-/// struct AnniversaryDate(#[rule(MaxRange(Utc::now()))] DateTime<Utc>);
+/// struct BirthDate(#[rule(MaxRange(Utc::now()))] DateTime<Utc>);
 /// ```
 pub struct MaxRange<T: PartialOrd<T>>(pub T);
 
@@ -85,24 +78,6 @@ fn check_value_too_high<T: PartialOrd<T>>(value: &T, max_range: &T) -> Result<()
         return Err(String::from("Value is too high"));
     }
     Ok(())
-}
-
-impl<T: PartialOrd<T>> Rule<Option<T>> for MinMaxRange<T> {
-    fn check(&self, value: &Option<T>) -> Result<(), String> {
-        check_permissively_option(self, value)
-    }
-}
-
-impl<T: PartialOrd<T>> Rule<Option<T>> for MaxRange<T> {
-    fn check(&self, value: &Option<T>) -> Result<(), String> {
-        check_permissively_option(self, value)
-    }
-}
-
-impl<T: PartialOrd<T>> Rule<Option<T>> for MinRange<T> {
-    fn check(&self, value: &Option<T>) -> Result<(), String> {
-        check_permissively_option(self, value)
-    }
 }
 
 #[cfg(test)]

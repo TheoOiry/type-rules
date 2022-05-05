@@ -1,5 +1,4 @@
 use super::Rule;
-use super::{check_permissively_option, check_permissively_ref_option};
 use regex_helper::Regex;
 
 /// Rule to constraint a [`String`] or `&str` to match a Regex
@@ -27,18 +26,6 @@ impl<'a> Rule<String> for RegEx<'a> {
 impl<'a> Rule<str> for RegEx<'a> {
     fn check(&self, value: &str) -> Result<(), String> {
         check(self.0, value)
-    }
-}
-
-impl<'a> Rule<Option<String>> for RegEx<'a> {
-    fn check(&self, value: &Option<String>) -> Result<(), String> {
-        check_permissively_option(self, value)
-    }
-}
-
-impl<'a> Rule<Option<&str>> for RegEx<'a> {
-    fn check(&self, value: &Option<&str>) -> Result<(), String> {
-        check_permissively_ref_option(self, value)
     }
 }
 
