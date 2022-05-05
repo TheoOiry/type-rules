@@ -169,6 +169,7 @@ Check the size of a `Vec<T>` :
 others :
 
 - `Opt`: Apply another rule to inner value of an `Option` ex: `Opt(MinMaxRange(1, 4))`
+- `Eval`: Rule to constrain any type to a predicate ex: `Eval(predicate, "Error message")`
 - `Validate`: Recursive checking ex: `Validate()`
 - `All`: Rule to constrain a collection to valid the specified rule ex: `All(MinLength(1), "You can't use empty string")`
 - `RegEx`: check if a `String` or `&str` matches the regex. 
