@@ -1,3 +1,4 @@
+mod all;
 mod min_max_length;
 mod min_max_range;
 mod min_max_size;
@@ -7,6 +8,7 @@ mod validate;
 #[cfg_attr(docsrs, doc(cfg(feature = "regex")))]
 mod regex;
 
+pub use self::all::*;
 pub use self::min_max_length::*;
 pub use self::min_max_range::*;
 pub use self::min_max_size::*;
