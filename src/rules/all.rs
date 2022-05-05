@@ -1,7 +1,7 @@
 use super::Rule;
 
-/// Rule to constrain a collection that is iterable (with reference)
-/// to valid the specified rule and specify an error message
+/// Rule to constrain an iterable collection (with reference)
+/// to valid the specified rule and an error message
 ///
 /// # Example
 /// ```
@@ -30,5 +30,28 @@ where
             true => Ok(()),
             false => Err(String::from(self.1)),
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::rules::{All, MinRange, Rule};
+    use claim::{assert_err, assert_ok};
+
+    const ERROR_MESSAGE: &str = "Value need to be >= 1";
+    const RULE: All<MinRange<i32>> = All(MinRange(1), ERROR_MESSAGE);
+
+    #[test]
+    fn all_ok() {
+        assert_ok!(RULE.check(&vec![1, 1]));
+    }
+    #[test]
+    fn all_err() {
+        assert_err!(RULE.check(&vec![1, 0]));
+    }
+    #[test]
+    fn all_good_error_message() {
+        let res_error_message = RULE.check(&vec![1, 0]).expect_err("Should be an Err");
+        assert_eq!(res_error_message, ERROR_MESSAGE);
     }
 }

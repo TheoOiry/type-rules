@@ -158,6 +158,7 @@ Check the size of a `Vec<T>` :
 others :
 
 - `Validate`: Recursive checking ex: `Validate()`
+- `All`: Rule to constrain a collection to valid the specified rule ex: `All(MinLength(1), "You can't use empty string")`
 - `RegEx`: check if a `String` or `&str` matches the regex. 
   You need the `regex` feature to use it.
   ex: `RegEx(r"^\S+@\S+\.\S+")`
