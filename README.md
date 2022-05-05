@@ -22,9 +22,16 @@ type-rules = { version = "0.1.2", features = ["derive", "regex"] }
 You can declare a struct and impose some constraints on each field 
 and check the validity like this:
 ```rust
+use chrono::prelude::*;
 use type_rules::Validator;
 //Don't forget to import the used rules.
-use type_rules::rules::{MaxLength, MinMaxLength, RegEx};
+use type_rules::rules::{
+  MaxLength, 
+  MinMaxLength, 
+  RegEx, 
+  Opt,
+  MaxRange,
+};
 
 #[derive(Validator)]
 struct NewUser {
@@ -32,16 +39,20 @@ struct NewUser {
     email: String,
     #[rule(MinMaxLength(8, 50))]
     password: String,
+    #[rule(Opt(MaxRange(Utc::now())))]
+    birth_date: Option<DateTime<Utc>>
 }
 
 let new_user = NewUser {
     email: "examples@examples.com".to_string(),
     password: "OPw$5%hJ".to_string(),
+    birth_date: None,
 };
 assert!(new_user.check_validity().is_ok());
 let new_user = NewUser {
     email: "examples@examples.com".to_string(),
     password: "O".to_string(),
+    birth_date: None,
 };
 assert!(new_user.check_validity().is_err()); //Value is too short
 ```
@@ -76,7 +87,7 @@ use chrono::prelude::*;
 use type_rules::Validator;
 
 #[derive(Validator)]
-struct AnniversaryDate(#[rule(MaxRange(Utc::now()))] DateTime<Utc>);
+struct BirthDate(#[rule(MaxRange(Utc::now()))] DateTime<Utc>);
 ```
 ```rust
 use type_rules::rules::MinLength;
@@ -157,6 +168,7 @@ Check the size of a `Vec<T>` :
 
 others :
 
+- `Opt`: Apply another rule to inner value of an `Option` ex: `Opt(MinMaxRange(1, 4))`
 - `Validate`: Recursive checking ex: `Validate()`
 - `All`: Rule to constrain a collection to valid the specified rule ex: `All(MinLength(1), "You can't use empty string")`
 - `RegEx`: check if a `String` or `&str` matches the regex. 
