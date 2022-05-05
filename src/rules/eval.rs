@@ -10,11 +10,11 @@ use super::Rule;
 /// use type_rules::Validator;
 /// use type_rules::rules::Eval;
 ///
-/// const even_eval: for<'a> fn(&'a u32) -> bool = |v| v % 2 == 0;
+/// const EVEN_EVAL: for<'a> fn(&'a u32) -> bool = |v| v % 2 == 0;
 ///
 /// #[derive(Validator)]
 /// struct EvenInteger(
-///     #[rule(Eval(even_eval, "Value need to be even"))]
+///     #[rule(Eval(EVEN_EVAL, "Value need to be even"))]
 ///     u32
 /// );
 /// ```
