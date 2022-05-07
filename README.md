@@ -90,13 +90,16 @@ use type_rules::Validator;
 struct BirthDate(#[rule(MaxRange(Utc::now()))] DateTime<Utc>);
 ```
 ```rust
-use type_rules::rules::MinLength;
+use type_rules::rules::{MaxRange, MinRange};
 use type_rules::Validator;
 
-const MIN_PASSWORD_LENGTH: usize = 8;
-
 #[derive(Validator)]
-struct Password(#[rule(MinLength(MIN_PASSWORD_LENGTH))] String);
+struct Range {
+  #[rule(MaxRange(self.max))] 
+  min: u32,
+  #[rule(MinRange(self.min))]
+  max: u32,
+};
 ```
 
 Or use expressions to express a checker directly.
