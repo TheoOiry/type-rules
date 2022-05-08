@@ -5,8 +5,7 @@ use super::Rule;
 ///
 /// # Example
 /// ```
-/// use type_rules::Validator;
-/// use type_rules::rules::MinMaxRange;
+/// use type_rules::prelude::*;
 ///
 /// #[derive(Validator)]
 /// struct QueryParameters{
@@ -22,8 +21,7 @@ pub struct MinMaxRange<T: PartialOrd<T>>(pub T, pub T);
 ///
 /// # Example
 /// ```
-/// use type_rules::Validator;
-/// use type_rules::rules::MinRange;
+/// use type_rules::prelude::*;
 ///
 /// #[derive(Validator)]
 /// struct NonZeroFloat(#[rule(MinRange(1_f32))] f32);
@@ -35,8 +33,7 @@ pub struct MinRange<T: PartialOrd<T>>(pub T);
 ///
 /// # Example
 /// ```
-/// use type_rules::Validator;
-/// use type_rules::rules::MaxRange;
+/// use type_rules::prelude::*;
 /// use chrono::prelude::*;
 ///
 /// #[derive(Validator)]

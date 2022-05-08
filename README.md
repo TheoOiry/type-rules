@@ -23,15 +23,7 @@ You can declare a struct and impose some constraints on each field
 and check the validity like this:
 ```rust
 use chrono::prelude::*;
-use type_rules::Validator;
-//Don't forget to import the used rules.
-use type_rules::rules::{
-  MaxLength, 
-  MinMaxLength, 
-  RegEx, 
-  Opt,
-  MaxRange,
-};
+use type_rules::prelude::*;
 
 #[derive(Validator)]
 struct NewUser {
@@ -60,11 +52,7 @@ assert!(new_user.check_validity().is_err()); //Value is too short
 Also works with enums :
 
 ```rust
-use type_rules::Validator;
-use type_rules::rules::{
-    MaxLength,
-    MinMaxRange
-};
+use type_rules::prelude::*;
 
 #[derive(Validator)]
 enum MyEnum {
@@ -82,8 +70,7 @@ enum MyEnum {
 To check recursively, you can use the `Validate` rule
 
 ```rust
-use type_rules::rules::{MaxLength, RegEx, Validate, MinMaxLength};
-use type_rules::Validator;
+use type_rules::prelude::*;
 
 #[derive(Validator)]
 struct EmailWrapper(#[rule(MaxLength(100), RegEx(r"^\S+@\S+\.\S+"))] String);
@@ -127,8 +114,7 @@ Here is an example of using a rule with more complex values:
 
 ```rust
 use std::env;
-use type_rules::rules::MaxLength;
-use type_rules::Validator;
+use type_rules::prelude::*;
 
 fn generate_max_payload_rule() -> MaxLength {
     MaxLength(match env::var("MAX_PAYLOAD") {
@@ -149,8 +135,7 @@ If you need a specific rule, just make a tuple struct (or struct if you make the
 that implements the `Rule` feature :
 
 ```rust
-use type_rules::Rule;
-use type_rules::Validator;
+use type_rules::prelude::*;
 
 struct IsEven();
 

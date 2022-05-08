@@ -6,8 +6,7 @@ use super::Rule;
 ///
 /// # Example
 /// ```
-/// use type_rules::Validator;
-/// use type_rules::rules::MinMaxLength;
+/// use type_rules::prelude::*;
 ///
 /// #[derive(Validator)]
 /// struct NewUser {
@@ -25,8 +24,7 @@ pub struct MinMaxLength(pub usize, pub usize);
 ///
 /// # Example
 /// ```
-/// use type_rules::Validator;
-/// use type_rules::rules::MinLength;
+/// use type_rules::prelude::*;
 ///
 /// #[derive(Validator)]
 /// struct Password(#[rule(MinLength(8))] String);
@@ -39,8 +37,7 @@ pub struct MinLength(pub usize);
 ///
 /// # Example
 /// ```
-/// use type_rules::Validator;
-/// use type_rules::rules::MaxLength;
+/// use type_rules::prelude::*;
 ///
 /// #[derive(Validator)]
 /// struct Payload(#[rule(MaxLength(200))] String);

@@ -6,8 +6,7 @@ use super::Rule;
 ///
 /// # Example
 /// ```
-/// use type_rules::Validator;
-/// use type_rules::rules::{Opt, MinMaxRange};
+/// use type_rules::prelude::*;
 ///
 /// #[derive(Validator)]
 /// struct Parameters {

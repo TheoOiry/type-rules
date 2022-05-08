@@ -1,8 +1,5 @@
 use chrono::prelude::*;
-use type_rules::rules::{
-    MaxLength, MaxRange, MinMaxLength, MinMaxRange, MinMaxSize, RegEx, Validate,
-};
-use type_rules::Validator;
+use type_rules::prelude::*;
 
 #[derive(Validator)]
 struct Email(

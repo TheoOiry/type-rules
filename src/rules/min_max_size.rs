@@ -5,8 +5,7 @@ use super::Rule;
 ///
 /// # Example
 /// ```
-/// use type_rules::Validator;
-/// use type_rules::rules::MinMaxSize;
+/// use type_rules::prelude::*;
 ///
 /// #[derive(Validator)]
 /// struct Car {
@@ -21,8 +20,7 @@ pub struct MinMaxSize(pub usize, pub usize);
 ///
 /// # Example
 /// ```
-/// use type_rules::Validator;
-/// use type_rules::rules::MinSize;
+/// use type_rules::prelude::*;
 ///
 /// #[derive(Validator)]
 /// struct NonEmptyVec<T>(#[rule(MinSize(1))] Vec<T>);
@@ -34,8 +32,7 @@ pub struct MinSize(pub usize);
 ///
 /// # Example
 /// ```
-/// use type_rules::Validator;
-/// use type_rules::rules::MaxSize;
+/// use type_rules::prelude::*;
 ///
 /// #[derive(Validator)]
 /// struct FollowedCategories(#[rule(MaxSize(100))] Vec<String>);

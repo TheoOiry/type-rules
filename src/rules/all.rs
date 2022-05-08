@@ -5,8 +5,7 @@ use super::Rule;
 ///
 /// # Example
 /// ```
-/// use type_rules::Validator;
-/// use type_rules::rules::{All, MinLength};
+/// use type_rules::prelude::*;
 ///
 /// #[derive(Validator)]
 /// struct VecNotEmptyString(

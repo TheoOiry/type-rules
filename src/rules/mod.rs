@@ -30,7 +30,7 @@ pub use self::regex::*;
 /// # Example
 ///
 /// ```
-/// use type_rules::{Validator, Rule};
+/// use type_rules::prelude::*;
 ///
 /// struct IsEven();
 ///

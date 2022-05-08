@@ -5,8 +5,7 @@ use crate::Validator;
 ///
 /// # Example
 /// ```
-/// use type_rules::rules::{MaxLength, MinLength, Validate, MinMaxLength};
-/// use type_rules::Validator;
+/// use type_rules::prelude::*;
 ///
 /// #[derive(Validator)]
 /// struct Password(#[rule(MinLength(8))] String);

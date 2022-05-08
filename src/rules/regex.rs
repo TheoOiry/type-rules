@@ -8,8 +8,7 @@ use regex_helper::Regex;
 ///
 /// # Example
 /// ```
-/// use type_rules::Validator;
-/// use type_rules::rules::RegEx;
+/// use type_rules::prelude::*;
 ///
 /// #[derive(Validator)]
 /// struct Mail(#[rule(RegEx(r"^\S+@\S+\.\S+"))] String);

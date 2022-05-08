@@ -7,8 +7,7 @@ use super::Rule;
 ///
 /// # Example
 /// ```
-/// use type_rules::Validator;
-/// use type_rules::rules::Eval;
+/// use type_rules::prelude::*;
 ///
 /// const EVEN_EVAL: for<'a> fn(&'a u32) -> bool = |v| v % 2 == 0;
 ///
