@@ -1,4 +1,5 @@
 mod all;
+mod and;
 mod eval;
 mod min_max_length;
 mod min_max_range;
@@ -11,6 +12,7 @@ mod validate;
 mod regex;
 
 pub use self::all::*;
+pub use self::and::*;
 pub use self::eval::*;
 pub use self::min_max_length::*;
 pub use self::min_max_range::*;
