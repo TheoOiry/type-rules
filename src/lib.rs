@@ -1,6 +1,11 @@
 #![cfg_attr(docsrs, feature(doc_cfg))]
 #![doc = include_str!("../README.md")]
+
+/// A module that contains all the rules
 pub mod rules;
+
+/// A convenience module appropriate for glob imports `use type_rules::prelude::*;`
+pub mod prelude;
 
 #[cfg(feature = "derive")]
 #[doc(hidden)]
@@ -21,8 +26,7 @@ pub use rules::Rule;
 /// Basic usage:
 ///
 /// ```should_panic
-/// use type_rules::Validator;
-/// use type_rules::rules::MinLength;
+/// use type_rules::prelude::*;
 ///
 /// #[derive(Validator)]
 /// struct NotEmptyString(#[rule(MinLength(1))] String);
