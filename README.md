@@ -57,6 +57,26 @@ let new_user = NewUser {
 assert!(new_user.check_validity().is_err()); //Value is too short
 ```
 
+Also works with enums :
+
+```rust
+use type_rules::Validator;
+use type_rules::rules::{
+    MaxLength,
+    MinMaxRange
+};
+
+#[derive(Validator)]
+enum MyEnum {
+    Option1(#[rule(MaxLength(200))] String),
+    Option2 {
+      #[rule(MinMaxRange(1, 10))]
+      integer: u32 
+    },
+    Option3,
+}
+```
+
 ## Advanced checking
 
 To check recursively, you can use the `Validate` rule

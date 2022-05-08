@@ -16,6 +16,16 @@ struct Email(
 );
 
 #[derive(Validator)]
+enum MyEnum {
+    Option1(#[rule(MaxLength(200))] String),
+    Option2 {
+        #[rule(MinMaxRange(1, 10))]
+        integer: u32,
+    },
+    Option3,
+}
+
+#[derive(Validator)]
 struct SignUpForm {
     #[rule(Validate())]
     email: Email,
