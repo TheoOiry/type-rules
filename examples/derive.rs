@@ -15,6 +15,7 @@ struct Email(
     String,
 );
 
+#[allow(dead_code)]
 #[derive(Validator)]
 enum MyEnum {
     Option1(#[rule(MaxLength(200))] String),
