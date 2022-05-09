@@ -11,6 +11,7 @@ A tool to easily constrain a struct and recover errors.
 5. [Rules list](#rules-list)
 
 ## Install
+
 ```toml
 # Cargo.toml
 [dependencies]
@@ -19,8 +20,9 @@ type-rules = { version = "0.1.2", features = ["derive", "regex"] }
 
 ## Basic checking
 
-You can declare a struct and impose some constraints on each field 
+You can declare a struct and impose some constraints on each field
 and check the validity like this:
+
 ```rust
 use chrono::prelude::*;
 use type_rules::prelude::*;
@@ -36,15 +38,15 @@ struct NewUser {
 }
 
 let new_user = NewUser {
-    email: "examples@examples.com".to_string(),
-    password: "OPw$5%hJ".to_string(),
-    birth_date: None,
+email: "examples@examples.com".to_string(),
+password: "OPw$5%hJ".to_string(),
+birth_date: None,
 };
 assert!(new_user.check_validity().is_ok());
 let new_user = NewUser {
-    email: "examples@examples.com".to_string(),
-    password: "O".to_string(),
-    birth_date: None,
+email: "examples@examples.com".to_string(),
+password: "O".to_string(),
+birth_date: None,
 };
 assert!(new_user.check_validity().is_err()); //Value is too short
 ```
@@ -58,8 +60,8 @@ use type_rules::prelude::*;
 enum MyEnum {
     Option1(#[rule(MaxLength(200))] String),
     Option2 {
-      #[rule(MinMaxRange(1, 10))]
-      integer: u32 
+        #[rule(MinMaxRange(1, 10))]
+        integer: u32
     },
     Option3,
 }
@@ -96,16 +98,17 @@ use type_rules::Validator;
 #[derive(Validator)]
 struct BirthDate(#[rule(MaxRange(Utc::now()))] DateTime<Utc>);
 ```
+
 ```rust
 use type_rules::rules::{MaxRange, MinRange};
 use type_rules::Validator;
 
 #[derive(Validator)]
 struct Range {
-  #[rule(MaxRange(self.max))] 
-  min: u32,
-  #[rule(MinRange(self.min))]
-  max: u32,
+    #[rule(MaxRange(self.max))]
+    min: u32,
+    #[rule(MinRange(self.min))]
+    max: u32,
 };
 ```
 
@@ -131,7 +134,8 @@ In this case the `generate_max_payload_rule` function is executed at each check
 
 ## Make your own rule
 
-If you need a specific rule, just make a tuple struct (or struct if you make the declaration outside the struct definition)
+If you need a specific rule, just make a tuple struct (or struct if you make the declaration outside the struct
+definition)
 that implements the `Rule` feature :
 
 ```rust
@@ -157,22 +161,25 @@ struct MyInteger(#[rule(IsEven())] i32);
 
 Here a list of the rules you can find in this crate.
 
-Each rule has its own [documentation](https://docs.rs/type-rules/0.1.2/type_rules/rules/index.html) 
+Each rule has its own [documentation](https://docs.rs/type-rules/0.1.2/type_rules/rules/index.html)
 with examples.
 
 Check the length of any type that implements `AsRef<str>` such
 as `String` or `&str`:
+
 - `MinLength`: Minimum length ex: `MinLength(5)`
 - `MaxLength`: Maximum length ex: `MaxLength(20)`
 - `MinMaxLength`: Minimum and maximum length ex: `MinMaxLength(5, 20)`
 
 Check the range for anything that implements `PartialOrd<Self>` like all numeric/floating types
 or dates with `chrono`:
+
 - `MinRange`: Minimum range ex: `MinRange(5)`
 - `MaxRange`: Maximum range ex: `MaxRange(20)`
 - `MinMaxRange`: Minimum and maximum range ex: `MinMaxRange(5, 20)`
 
 Check the size of a `Vec<T>` :
+
 - `MinSize`: Minimum size ex: `MinSize(5)`
 - `MaxSize`: Maximum size ex: `MaxSize(20)`
 - `MinMaxSize`: Minimum and maximum size ex: `MinMaxSize(5, 20)`
@@ -184,7 +191,10 @@ others :
 - `Or`: Rule to apply an Or condition on two other rules. ex: `Or(MaxRange(-1), MinRange(1))`
 - `Eval`: Rule to constrain any type to a predicate ex: `Eval(predicate, "Error message")`
 - `Validate`: Recursive checking ex: `Validate()`
-- `All`: Rule to constrain a collection to valid the specified rule ex: `All(MinLength(1), "You can't use empty string")`
-- `RegEx`: check if a type that implement `AsRef<str>` (String, &str, ...) matches the regex. 
+- `In`: Rule to constrain a type to be `in` a collection
+  ex: `In(["apple", "banana", "orange", "pear"], "Value need to be a fruit")`
+- `All`: Rule to constrain a collection to valid the specified rule
+  ex: `All(MinLength(1), "You can't use empty string")`
+- `RegEx`: check if a type that implement `AsRef<str>` (String, &str, ...) matches the regex.
   You need the `regex` feature to use it.
   ex: `RegEx(r"^\S+@\S+\.\S+")`
