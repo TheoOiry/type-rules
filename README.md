@@ -1,5 +1,20 @@
 # type-rules
 
+<div>
+  <a href="https://crates.io/crates/type_rules">
+    <img src="https://img.shields.io/crates/v/type_rules.svg?style=flat-square"
+    alt="Crates.io version" />
+  </a>
+  <a href="https://docs.rs/type_rules">
+    <img src="https://img.shields.io/badge/docs-latest-blue.svg?style=flat-square"
+      alt="docs.rs docs" />
+  </a>
+  <a href="https://crates.io/crates/type_rules">
+    <img src="https://img.shields.io/crates/l/type_rules.svg?style=flat-square"
+    alt="License" />
+  </a>
+</div>
+
 A tool to easily constrain a struct and recover errors.
 
 ## Table of Contents
@@ -15,7 +30,7 @@ A tool to easily constrain a struct and recover errors.
 ```toml
 # Cargo.toml
 [dependencies]
-type-rules = { version = "0.1.2", features = ["derive", "regex"] }
+type-rules = { version = "0.2.0", features = ["derive", "regex"] }
 ```
 
 ## Basic checking
@@ -38,15 +53,15 @@ struct NewUser {
 }
 
 let new_user = NewUser {
-email: "examples@examples.com".to_string(),
-password: "OPw$5%hJ".to_string(),
-birth_date: None,
+    email: "examples@examples.com".to_string(),
+    password: "OPw$5%hJ".to_string(),
+    birth_date: None,
 };
 assert!(new_user.check_validity().is_ok());
 let new_user = NewUser {
-email: "examples@examples.com".to_string(),
-password: "O".to_string(),
-birth_date: None,
+    email: "examples@examples.com".to_string(),
+    password: "O".to_string(),
+    birth_date: None,
 };
 assert!(new_user.check_validity().is_err()); //Value is too short
 ```
@@ -161,7 +176,7 @@ struct MyInteger(#[rule(IsEven())] i32);
 
 Here a list of the rules you can find in this crate.
 
-Each rule has its own [documentation](https://docs.rs/type-rules/0.1.2/type_rules/rules/index.html)
+Each rule has its own [documentation](https://docs.rs/type-rules/latest/type_rules/rules/index.html)
 with examples.
 
 Check the length of any type that implements `AsRef<str>` such

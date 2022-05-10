@@ -1,6 +1,6 @@
 [package]
 name = "type-rules-derive"
-version = "0.1.2"
+version = "0.2.0"
 edition = "2021"
 readme = "../README.md"
 description = "type-rules derive macro"
@@ -14,7 +14,7 @@ authors = ["Théo Oiry <theo.oiry@yahoo.fr>"]
 
 [dependencies]
 proc-macro2 = "1.0"
-syn = { version="1.0", features=["parsing", "extra-traits", "full"] }
+syn = { version = "1.0", features = ["parsing", "extra-traits", "full"] }
 quote = "1.0"
 
 [lib]

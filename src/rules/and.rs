@@ -1,5 +1,8 @@
 use super::Rule;
 
+#[cfg(doc)]
+use super::{All, Opt};
+
 /// Rule to ensure that 2 other rules are [`Ok`].
 ///
 /// The `rule` attribute accepts multiple rules and has the same behavior
