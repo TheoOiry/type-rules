@@ -106,17 +106,15 @@ You can use expressions directly in rule derive attribute.
 For example, you can use const or function directly in the checker parameters:
 
 ```rust
-use type_rules::rules::MaxRange;
+use type_rules::prelude::*;
 use chrono::prelude::*;
-use type_rules::Validator;
 
 #[derive(Validator)]
 struct BirthDate(#[rule(MaxRange(Utc::now()))] DateTime<Utc>);
 ```
 
 ```rust
-use type_rules::rules::{MaxRange, MinRange};
-use type_rules::Validator;
+use type_rules::prelude::*;
 
 #[derive(Validator)]
 struct Range {
