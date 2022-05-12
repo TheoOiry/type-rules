@@ -103,7 +103,7 @@ struct User {
 
 You can use expressions directly in rule derive attribute.
 
-For example, you can use const or function directly in the checker parameters:
+For example, you can use const or function directly in the rule parameters:
 
 ```rust
 use type_rules::prelude::*;
@@ -125,7 +125,7 @@ struct Range {
 };
 ```
 
-Or use expressions to express a checker directly.
+Or use expressions to express a rule directly.
 Here is an example of using a rule with more complex values:
 
 ```rust
