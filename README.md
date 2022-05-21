@@ -30,7 +30,7 @@ A tool to easily constrain a struct and recover errors.
 ```toml
 # Cargo.toml
 [dependencies]
-type-rules = { version = "0.2.0", features = ["derive", "regex"] }
+type-rules = { version = "0.2.1", features = ["derive", "regex"] }
 ```
 
 ## Basic checking

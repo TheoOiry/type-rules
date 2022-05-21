@@ -3,7 +3,7 @@ members = [".", "derive"]
 
 [package]
 name = "type-rules"
-version = "0.2.0"
+version = "0.2.1"
 readme = "README.md"
 edition = "2021"
 description = "A crate to easily constrain a struct"
@@ -20,7 +20,7 @@ features = ["regex"]
 rustdoc-args = ["--cfg", "docsrs"]
 
 [dependencies]
-type-rules-derive = { optional = true, path = "derive", version = "0.2.0" }
+type-rules-derive = { optional = true, path = "derive", version = "0.2.1" }
 regex_helper = { optional = true, package = "regex", version = "1.5.4" }
 
 [dev-dependencies]
