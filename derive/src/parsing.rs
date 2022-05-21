@@ -172,7 +172,7 @@ impl Field {
         let ident = self.get_named_ident();
         let rules = &self.rules;
         quote! {
-            #( type_rules::Rule::check(&#rules, &#ident)?; )*
+            #( type_rules::Rule::check(&#rules, #ident)?; )*
         }
     }
 
