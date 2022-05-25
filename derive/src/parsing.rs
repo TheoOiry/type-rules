@@ -93,7 +93,11 @@ impl Parse for RuleAttribute {
 
 impl RuleAttribute {
     pub fn parse_attributes(attrs: &[syn::Attribute]) -> Vec<syn::Expr> {
-        attrs.iter().flat_map(Self::parse_attribute).collect()
+        attrs
+            .iter()
+            .filter(|attr| attr.path.is_ident("rule"))
+            .flat_map(Self::parse_attribute)
+            .collect()
     }
 
     fn parse_attribute(attr: &syn::Attribute) -> Vec<syn::Expr> {
