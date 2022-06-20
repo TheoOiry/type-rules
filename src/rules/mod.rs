@@ -1,5 +1,6 @@
 mod all;
 mod and;
+mod any;
 mod eval;
 mod is_in;
 mod min_max_length;
@@ -7,14 +8,14 @@ mod min_max_range;
 mod min_max_size;
 mod opt;
 mod or;
-mod validate;
-
 #[cfg(feature = "regex")]
 #[cfg_attr(docsrs, doc(cfg(feature = "regex")))]
 mod regex;
+mod validate;
 
 pub use self::all::*;
 pub use self::and::*;
+pub use self::any::*;
 pub use self::eval::*;
 pub use self::is_in::*;
 pub use self::min_max_length::*;
