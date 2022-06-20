@@ -2,18 +2,20 @@ use super::Rule;
 
 /// Rule to constrain any type to a predicate
 ///
-/// The value is always passed by its reference,
-/// the closure need to accept that
+/// The value is always passed by its reference
+///
+/// If you pass a closure make sure that the value
+/// are typed, without this, rust consider that your
+/// closure is not general enough because it can't ensure
+/// that it implements FnOnce for any lifetime
 ///
 /// # Example
 /// ```
 /// use type_rules::prelude::*;
 ///
-/// const EVEN_EVAL: for<'a> fn(&'a u32) -> bool = |v| v % 2 == 0;
-///
 /// #[derive(Validator)]
 /// struct EvenInteger(
-///     #[rule(Eval(EVEN_EVAL, "Value need to be even"))]
+///     #[rule(Eval(|v: &u32| v % 2 == 0, "Value need to be even"))]
 ///     u32
 /// );
 /// ```
