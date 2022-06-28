@@ -1,5 +1,5 @@
 use super::Rule;
-use regex_helper::Regex;
+use regex::Regex;
 
 /// Rule to constraint any type that implements [`AsRef<str>`] such
 /// as [`String`] or `&str` to match a Regex
