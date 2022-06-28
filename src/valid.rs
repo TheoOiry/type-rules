@@ -1,8 +1,9 @@
 use crate::Validator;
+use std::fmt;
 use std::ops::Deref;
 
-#[derive(Debug, Copy, Clone)]
-pub struct Valid<T>(T);
+#[derive(Debug)]
+pub struct Valid<T: Validator>(T);
 
 impl<T: Validator> Valid<T> {
     #[allow(dead_code)]
@@ -10,13 +11,24 @@ impl<T: Validator> Valid<T> {
         val.check_validity()?;
         Ok(Valid(val))
     }
+
+    #[allow(dead_code)]
+    pub fn into_inner(self) -> T {
+        self.0
+    }
 }
 
-impl<T> Deref for Valid<T> {
+impl<T: Validator> Deref for Valid<T> {
     type Target = T;
 
     fn deref(&self) -> &Self::Target {
         &self.0
+    }
+}
+
+impl<T: Validator + fmt::Display> fmt::Display for Valid<T> {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        fmt::Display::fmt(&self.0, f)
     }
 }
 
@@ -34,7 +46,7 @@ impl<'a, T: Validator + serde::Deserialize<'a>> serde::Deserialize<'a> for Valid
 
 #[cfg(feature = "serde")]
 #[cfg_attr(docsrs, doc(cfg(feature = "serde")))]
-impl<T: serde::Serialize> serde::Serialize for Valid<T> {
+impl<T: Validator + serde::Serialize> serde::Serialize for Valid<T> {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: serde::Serializer,
