@@ -22,10 +22,13 @@ rustdoc-args = ["--cfg", "docsrs"]
 [dependencies]
 type-rules-derive = { optional = true, path = "derive", version = "0.2.2" }
 regex_helper = { optional = true, package = "regex", version = "1.5.4" }
+serde = { optional = true, package = "serde", version = "1.0" }
 
 [dev-dependencies]
 claim = "0.5.0"
 chrono = "0.4.19"
+serde_json = "1.0.81"
+serde_derive = "1.0.137"
 
 [features]
 derive = ["type-rules-derive"]
