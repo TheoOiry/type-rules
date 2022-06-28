@@ -4,6 +4,8 @@
 /// A module that contains all the rules
 pub mod rules;
 
+mod valid;
+
 /// A convenience module appropriate for glob imports `use type_rules::prelude::*;`
 pub mod prelude;
 
