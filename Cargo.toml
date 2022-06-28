@@ -16,7 +16,7 @@ license = "MIT OR Apache-2.0"
 authors = ["Théo Oiry <theo.oiry@yahoo.fr>"]
 
 [package.metadata.docs.rs]
-features = ["regex"]
+features = ["regex", "serde"]
 rustdoc-args = ["--cfg", "docsrs"]
 
 [dependencies]

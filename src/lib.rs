@@ -16,6 +16,9 @@ pub use type_rules_derive::*;
 #[doc(inline)]
 pub use rules::Rule;
 
+#[doc(inline)]
+pub use valid::Valid;
+
 /// Check the validity of a type
 ///
 /// By implementing `Validator` for a type, you define the
