@@ -30,7 +30,7 @@ A tool to easily constrain a struct and recover errors.
 ```toml
 # Cargo.toml
 [dependencies]
-type-rules = { version = "0.2.2", features = ["derive", "regex"] }
+type-rules = { version = "0.2.3", features = ["derive", "regex", "serde"] }
 ```
 
 ## Basic checking
@@ -169,6 +169,36 @@ impl Rule<i32> for IsEven {
 #[derive(Validator)]
 struct MyInteger(#[rule(IsEven())] i32);
 ```
+
+## Valid wrapper
+
+`Valid` is a wrapper for any type that implements `Validator`
+it permit to ensure at compile time that the inner type as been
+verified.
+
+With the `serde` feature, Valid can be serialized and deserialized
+with validity check.
+```rust
+use type_rules::prelude::*;
+
+#[derive(Validator)]
+struct NewUser {
+   #[rule(MinMaxLength(3, 50))]
+   username: String,
+   #[rule(MinMaxLength(8, 100))]
+   password: String,
+}
+
+fn do_something(user: Valid<NewUser>) {
+   // No need to check if user is valid
+}
+
+let new_user = NewUser {
+   username: "example".to_string(),
+   password: "OPw$5%hJJ".to_string(),
+};
+do_something(Valid::new(new_user).unwrap());
+ ```
 
 ## Rules list
 
