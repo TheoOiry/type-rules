@@ -1,2 +1,2 @@
 pub use super::rules::*;
-pub use super::{Rule, Validator, Valid};
+pub use super::{Rule, Valid, Validator};
