@@ -2,6 +2,33 @@ use crate::Validator;
 use std::fmt;
 use std::ops::Deref;
 
+/// `Valid` is a wrapper for any type that implements [`Validator`]
+/// it permit to ensure at compile time that the inner type as been
+/// verified.
+///
+/// With the [`serde`] feature, Valid can be serialized and deserialized
+/// with validity check.
+/// ```
+/// use type_rules::prelude::*;
+///
+/// #[derive(Validator)]
+/// struct NewUser {
+///     #[rule(MinMaxLength(3, 50))]
+///     username: String,
+///     #[rule(MinMaxLength(8, 100))]
+///     password: String,
+/// }
+///
+/// fn do_something(user: Valid<NewUser>) {
+///     // No need to check if user is valid
+/// }
+///
+/// let new_user = NewUser {
+///     username: "example".to_string(),
+///     password: "OPw$5%hJJ".to_string(),
+/// };
+/// do_something(Valid::new(new_user).unwrap());
+/// ```
 #[derive(Debug)]
 pub struct Valid<T: Validator>(T);
 
