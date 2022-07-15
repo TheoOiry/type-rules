@@ -21,7 +21,7 @@ rustdoc-args = ["--cfg", "docsrs"]
 
 [dependencies]
 type-rules-derive = { optional = true, path = "derive", version = "0.2.3" }
-regex = { optional = true, version = "1.5.4" }
+regex = { optional = true, version = "1.6" }
 serde = { optional = true, version = "1.0" }
 
 [dev-dependencies]
