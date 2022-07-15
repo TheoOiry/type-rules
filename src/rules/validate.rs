@@ -13,11 +13,11 @@ use crate::Validator;
 /// #[derive(Validator)]
 /// struct User {
 ///     username: String,
-///     #[rule(Validate())]
+///     #[rule(Validate)]
 ///     password: Password,
 /// };
 /// ```
-pub struct Validate();
+pub struct Validate;
 
 impl<T: Validator> Rule<T> for Validate {
     fn check(&self, value: &T) -> Result<(), String> {
@@ -41,10 +41,10 @@ mod tests {
 
     #[test]
     fn validate_ok() {
-        assert_ok!(Validate().check(&StringWrapper(String::from("a"))));
+        assert_ok!(Validate.check(&StringWrapper(String::from("a"))));
     }
     #[test]
     fn validate_err() {
-        assert_err!(Validate().check(&StringWrapper(String::from("aaa"))));
+        assert_err!(Validate.check(&StringWrapper(String::from("aaa"))));
     }
 }

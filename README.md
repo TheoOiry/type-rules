@@ -94,7 +94,7 @@ struct EmailWrapper(#[rule(MaxLength(100), RegEx(r"^\S+@\S+\.\S+"))] String);
 
 #[derive(Validator)]
 struct User {
-    #[rule(Validate())]
+    #[rule(Validate)]
     email: EmailWrapper,
     #[rule(MinMaxLength(8, 50))]
     password: String,
@@ -233,7 +233,7 @@ others :
 - `And`: Rule to ensure that 2 other rules are `Ok` ex: `And(MaxLength(1000), RegEx(r"^\S+@\S+\.\S+"))`
 - `Or`: Rule to apply an Or condition on two other rules. ex: `Or(MaxRange(-1), MinRange(1))`
 - `Eval`: Rule to constrain any type to a predicate ex: `Eval(predicate, "Error message")`
-- `Validate`: Recursive checking ex: `Validate()`
+- `Validate`: Recursive checking ex: `Validate`
 - `In`: Rule to constrain a type to be `in` a collection
   ex: `In(["apple", "banana", "orange", "pear"], "Value need to be a fruit")`
 - `All`: Rule to constrain a collection to valid the specified rule

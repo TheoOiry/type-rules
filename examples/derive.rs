@@ -25,7 +25,7 @@ enum MyEnum {
 
 #[derive(Validator)]
 struct SignUpForm {
-    #[rule(Validate())]
+    #[rule(Validate)]
     email: Email,
     #[rule(MinMaxLength(8, 50))]
     password: String,
