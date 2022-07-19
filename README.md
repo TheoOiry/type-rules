@@ -154,7 +154,7 @@ that implements the `Rule` feature :
 ```rust
 use type_rules::prelude::*;
 
-struct IsEven();
+struct IsEven;
 
 impl Rule<i32> for IsEven {
     fn check(&self, value: &i32) -> Result<(), String> {
@@ -167,7 +167,7 @@ impl Rule<i32> for IsEven {
 }
 
 #[derive(Validator)]
-struct MyInteger(#[rule(IsEven())] i32);
+struct MyInteger(#[rule(IsEven)] i32);
 ```
 
 ## Valid wrapper
